@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+
+    defaultConfig {
+        applicationId "serial.jni"
+        minSdkVersion 21
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation files('libs/gltest.jar')
+    implementation files('libs/newGather_NoView-1.6.3.jar')
+    implementation files('libs/UsbSerialLibrary-1.0.jar')
+}

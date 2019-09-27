@@ -1,0 +1,114 @@
+[
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\raw_heartbeat.ogg.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\raw\\heartbeat.ogg"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\menu_menu_printer.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\menu\\menu_printer.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\raw_wav1.wav.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\raw\\wav1.wav"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_anim_click.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_anim_click.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_in_rotate_interpolator.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_in_rotate_interpolator.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\drawable_titlebar_2.png.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\drawable\\titlebar_2.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_push_left_in.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\push_left_in.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_main_rotate_right.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_main_rotate_right.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_click_interpolator.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_click_interpolator.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\drawable_titlebar_1.png.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\drawable\\titlebar_1.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_anticipate_interpolator.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_anticipate_interpolator.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_glsurfaceview.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_glsurfaceview.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\xml_device_filter.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\xml\\device_filter.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher.png.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\drawable\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_device_name.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\device_name.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_main_rotate_left.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_main_rotate_left.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\raw_wav.wav.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\raw\\wav.wav"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\drawable_titlebar_3.png.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\drawable\\titlebar_3.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_out_rotate_interpolator.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_out_rotate_interpolator.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\menu_menu_gather.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\menu\\menu_gather.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\drawable_button_icon.png.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\drawable\\button_icon.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_start.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_start.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_gv.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\gv.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_item_overshoot_interpolator.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_overshoot_interpolator.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_push_left_out.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\push_left_out.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\raw_beat.ogg.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\raw\\beat.ogg"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_usb_main.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\usb_main.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_list.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_list.xml"
+    }
+]
