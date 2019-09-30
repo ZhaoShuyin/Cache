@@ -224,7 +224,8 @@ public class BltManager {
             if (mBluetoothSocket != null)
                 //全局只有一个bluetooth，所以我们可以将这个socket对象保存在appliaction中
                 MyApplication.bluetoothSocket = mBluetoothSocket;
-            //通过反射得到bltSocket对象，与uuid进行连接得到的结果一样，但这里不提倡用反射的方法
+            //通过反射得到bltSocket对象，与uuid进行连接得到的结果一
+            // 样，但这里不提倡用反射的方法
             //mBluetoothSocket = (BluetoothSocket) btDev.getClass().getMethod("createRfcommSocket", new Class[]{int.class}).invoke(btDev, 1);
             Log.d("blueTooth", "开始连接...");
             //在建立之前调用

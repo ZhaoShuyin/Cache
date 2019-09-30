@@ -1,5 +1,6 @@
 package com.zsy.bluetooth;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -26,8 +27,9 @@ import java.util.UUID;
  */
 
 public class BtTool {
+    public static MainActivity activity;
     static String TAG = "btdemo";
-    private static BluetoothAdapter bluetoothAdapter;
+    public static BluetoothAdapter bluetoothAdapter;
     private static BluetoothServerSocket serverSocket;
     private static BluetoothSocket socket;
     private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -40,12 +42,15 @@ public class BtTool {
      * 初始化开始等待
      */
     public static void initAcceptService(Context context) {
+        activity = (MainActivity) context;
         bluetoothAdapter = getAdapter(context);
         if (bluetoothAdapter==null){
             return;
         }
+        activity.show("创建 bluetoothAdapter");
         try {
-            serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord("bttest", uuid);
+            serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord("com.zsy.bluetooth", uuid);
+            activity.show("创建 serverSocket");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,12 +59,15 @@ public class BtTool {
             @Override
             public void run() {
                 while (true) {
-                    Log.e(TAG, "开始等待接入");
+                    activity.show("开始等待接入.....");
                     try {
                         socket = serverSocket.accept();
                         if (socket != null) {
-                            Log.e(TAG, "等待被接入成功" );
+                            activity.show("等待被接入成功");
                             serverSocket.close();
+                            break;
+                        }else{
+                            activity.show("等待被接入失败");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -69,6 +77,28 @@ public class BtTool {
         }).start();
     }
 
+
+    public static boolean connect(BluetoothDevice device){
+        try {
+            BluetoothSocket soc = device.createRfcommSocketToServiceRecord(uuid);
+            if (soc!=null){
+                socket = soc;
+                socket.connect();
+                Log.e(TAG, "connect: 连接设备成功" );
+                activity.show("连接设备成功");
+                return true;
+            }else{
+                activity.show("连接设备失败");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            activity.show("连接设备失败");
+            return false;
+        }
+    }
+
+
     public static void receive(final ServiceListener listener) {
         if (socket == null || listener == null) {
             return;
@@ -76,19 +106,21 @@ public class BtTool {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.e(TAG, "开启socket接收");
+                activity.show("开启socket接收");
                 try {
                     InputStream inputStream = socket.getInputStream();
-                    BufferedReader bff = new BufferedReader(new InputStreamReader(inputStream));
+                    BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream));
                     String json;
                     while (true) {
-                        while ((json = bff.readLine()) != null) {
-                            Log.e(TAG, "接收到消息"+json);
+                        while ((json = bReader.readLine()) != null) {
+                            Log.e(TAG, "接收消息: "+json );
+                            activity.show("接收到消息: "+json);
                             listener.received(json);
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    activity.show("开启接收线程失败:"+e.toString());
                 }
             }
         }).start();
@@ -103,7 +135,7 @@ public class BtTool {
             outputStream = socket.getOutputStream();
             outputStream.write(msg.getBytes("utf-8"));
             outputStream.flush();
-            Log.e(TAG, "发送消息完毕:"+msg);
+            activity.show("发送消息完毕: "+msg);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -91,8 +91,8 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         registerReceiver(blueToothReceiver, blueToothReceiver.makeFilter());
         BltManager.getInstance().initBltManager(this);
-        init();
         initblue();
+        init();
     }
 
     @Override
@@ -277,7 +277,6 @@ public class MainActivity extends BaseActivity {
                 new AcpListener() {
                     @Override
                     public void onGranted() {
-                        Log.d(TAG, "来到这里了......");
                         if (mBtAdapter.isDiscovering()) {
                             mBtAdapter.cancelDiscovery();
                         }
@@ -286,7 +285,6 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onDenied(List<String> permissions) {
-
                     }
                 });
     }
