@@ -28,7 +28,6 @@ public class ECGActivity extends AppCompatActivity {
     private boolean isConnecting = false;
     private boolean isWaitting = false;
     private short[] shorts = new short[12];
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +110,7 @@ public class ECGActivity extends AppCompatActivity {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if ((device.getName() != null) && (device.getName().contains("ECGWS") || device.getName().contains("8000GW"))) {
-                    show("........ 搜索到特定设备 : <" + device.getName()+">");
+                    show("........ 搜索到特定设备 : <" + device.getName() + ">");
                     if (bluetoothAdapter.isDiscovering()) {
                         bluetoothAdapter.cancelDiscovery();
                     }
@@ -175,6 +174,7 @@ public class ECGActivity extends AppCompatActivity {
         show(" ,,,,,连接中断 , 开启线程尝试重新连接,,,,,,");
         new Thread(new Runnable() {
             int i = 0;
+
             @Override
             public void run() {
                 while (!isConnecting) {
