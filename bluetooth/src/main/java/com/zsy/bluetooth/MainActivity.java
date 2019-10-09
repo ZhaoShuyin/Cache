@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void send(View view) {
         String msg = String.valueOf(System.currentTimeMillis());
-        BtTool.send(msg);
+        BtTool.send("消息哈哈哈");
     }
 
 

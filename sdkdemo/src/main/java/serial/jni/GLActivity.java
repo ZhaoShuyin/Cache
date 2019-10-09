@@ -31,6 +31,9 @@ public class GLActivity extends Activity {
     private static UsbManager mUsbManager;
     private static UsbDevice mUsbDevice;
     private String strCase;
+
+    private String TAG = "ecgdata";
+
     /**
      * 2018-05 isFinishActivity
      * 此变量根据实际使用场景设置，当返回执行关闭当前波形显示acticity时，由于可能蓝牙正在连接中，会返回连接失败的消息
@@ -41,11 +44,11 @@ public class GLActivity extends Activity {
     private int n = 0;
     private int p = 0;
     private int q = 0;
-    private Button btnStartConnect;
-    private Button btnStopConnect;
+    private Button btnStartConnect;      //开始连接
+    private Button btnStopConnect;       //断开连接
 
-    private Button btnStartECGRenderer;
-    private Button btnStopECGRenderer;
+    private Button btnStartECGRenderer;  //开始绘图
+    private Button btnStopECGRenderer;   //停止绘图
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +101,11 @@ public class GLActivity extends Activity {
         btnStartECGRenderer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //数据源
                 mEcgQueue = new ConcurrentLinkedQueue<Short>();
+                //绑定数据
                 glView.setEcgDataBuf(mEcgQueue);
+                //开始绘图
                 glView.startRenderer();
             }
         });
@@ -282,38 +288,37 @@ public class GLActivity extends Activity {
         // glView负责显示
         // 蓝牙采集
 //*
-        Intent para = null;
-        para = getIntent();
-        if (para != null) {
-            String address = para.getExtras().getString("device_address");
-            data = new DataUtils(mContext, address,
+        Intent intent = null;
+        intent = getIntent();
+        if (intent != null) {
+            String dAddress = intent.getExtras().getString("device_address");
+            Log.e(TAG, "开始绑定设备 MAC: " + dAddress);
+            data = new DataUtils(mContext, dAddress,
                     new BluConnectionStateListener() {
                         @Override
                         public void OnBluConnectionInterrupted() {
-                            // TODO Auto-generated method stub
+                            Log.e(TAG, "OnBluConnectionInterrupted: ");
                             mHandler.obtainMessage(MESSAGE_CONNECT_INTERRUPTED,
                                     -1, -1).sendToTarget();
                         }
 
                         @Override
                         public void OnBluConnectSuccess() {
-                            // TODO Auto-generated method stub
-                            mHandler.obtainMessage(MESSAGE_CONNECT_SUCCESS, -1,
-                                    -1).sendToTarget();
+                            Log.e(TAG, "OnBluConnectSuccess: ");
+                            mHandler.obtainMessage(MESSAGE_CONNECT_SUCCESS, -1, -1).sendToTarget();
                         }
 
                         @Override
                         public void OnBluConnectStart() {
-                            // TODO Auto-generated method stub
-                            mHandler.obtainMessage(MESSAGE_CONNECT_START)
-                                    .sendToTarget();
+                            Log.e(TAG, "OnBluConnectStart: ");
+                            mHandler.obtainMessage(MESSAGE_CONNECT_START).sendToTarget();
                         }
 
                         @Override
                         public void OnBluConnectFaild() {
-                            // TODO Auto-generated method stub
-                            mHandler.obtainMessage(MESSAGE_CONNECT_FAILED, -1,
-                                    -1).sendToTarget();
+                            Log.e(TAG, "OnBluConnectFaild: ");
+                            mHandler.obtainMessage(MESSAGE_CONNECT_FAILED, -1, -1).sendToTarget();
+
                         }
                     });
         }
@@ -432,9 +437,9 @@ public class GLActivity extends Activity {
     private TextView textLF;
     private static final int MESSAGE_UPDATE_HR = 0;
     private static final int MESSAGE_UPDATE_LeadOff = 1;
-    public static final int MESSAGE_CONNECT_START = 0x100;
-    public static final int MESSAGE_CONNECT_SUCCESS = 0x200;
-    public static final int MESSAGE_CONNECT_FAILED = 0x300;
+    public static final int MESSAGE_CONNECT_START = 0x100;   //256 开始绑定
+    public static final int MESSAGE_CONNECT_SUCCESS = 0x200; //512 绑定成功
+    public static final int MESSAGE_CONNECT_FAILED = 0x300;  //
     public static final int MESSAGE_CONNECT_INTERRUPTED = 0x400;
 
     public static final int MESSAGE_USB_CONNECT_START = 0xA010;
@@ -449,21 +454,18 @@ public class GLActivity extends Activity {
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Log.e(TAG, "handleMessage: " + msg.what);
             switch (msg.what) {
                 case MESSAGE_UPDATE_HR:
-                    // textHR.setText(""+data.getHR());
-                    // Log.e("HR",msg.obj.toString()+"bpm" );
                     textHR.setText(msg.obj.toString() + "bpm");
                     break;
                 case MESSAGE_UPDATE_LeadOff:
                     textLF.setText(msg.obj.toString());
                     break;
-                case MESSAGE_CONNECT_START:
-                    Log.e("BL", "Connect Start");
-                    Toast.makeText(mContext, "Connect Start", Toast.LENGTH_SHORT)
-                            .show();
+                case MESSAGE_CONNECT_START:  //256 开始
+                    Toast.makeText(mContext, "Connect Start", Toast.LENGTH_SHORT).show();
                     break;
-                case MESSAGE_CONNECT_SUCCESS:
+                case MESSAGE_CONNECT_SUCCESS: //512 绑定成功
 //				Log.e("BL", "Connect Success");
                     btnStartECGRenderer.setEnabled(true);
                     Toast.makeText(mContext, "Connect Success", Toast.LENGTH_SHORT).show();
@@ -592,7 +594,7 @@ public class GLActivity extends Activity {
                 for (int i = 48; i < 60; i++) {
                     mEcgQueue.offer(wave[i]);
                 }
-//				Log.e("callEcgWaveDataMsg", " " + mEcgQueue.size());
+//                Log.e("ecgdata", " 数据 " + mEcgQueue.size());
             }
         }
     }

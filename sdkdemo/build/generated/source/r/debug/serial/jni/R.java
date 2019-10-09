@@ -119,14 +119,16 @@ public final class R {
     public static final int textLeadOff=0x7f06002e;
     public static final int textPaper=0x7f06002f;
     public static final int titlebar=0x7f060030;
+    public static final int tv_msg=0x7f060031;
   }
   public static final class layout {
-    public static final int activity_glsurfaceview=0x7f070000;
-    public static final int activity_list=0x7f070001;
-    public static final int activity_start=0x7f070002;
-    public static final int device_name=0x7f070003;
-    public static final int gv=0x7f070004;
-    public static final int usb_main=0x7f070005;
+    public static final int activity_ecg=0x7f070000;
+    public static final int activity_glsurfaceview=0x7f070001;
+    public static final int activity_list=0x7f070002;
+    public static final int activity_start=0x7f070003;
+    public static final int device_name=0x7f070004;
+    public static final int gv=0x7f070005;
+    public static final int usb_main=0x7f070006;
   }
   public static final class menu {
     public static final int menu_gather=0x7f080000;

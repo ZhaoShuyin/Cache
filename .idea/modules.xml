@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bluetooth/bluetooth.iml" filepath="$PROJECT_DIR$/bluetooth/bluetooth.iml" />
       <module fileurl="file://$PROJECT_DIR$/btdemo/btdemo.iml" filepath="$PROJECT_DIR$/btdemo/btdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecg/ecg.iml" filepath="$PROJECT_DIR$/ecg/ecg.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdkdemo/sdkdemo.iml" filepath="$PROJECT_DIR$/sdkdemo/sdkdemo.iml" />
     </modules>
   </component>

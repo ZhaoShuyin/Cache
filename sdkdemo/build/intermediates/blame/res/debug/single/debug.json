@@ -60,6 +60,10 @@
         "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\device_name.xml"
     },
     {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_ecg.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_ecg.xml"
+    },
+    {
         "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\anim_sat_main_rotate_left.xml.flat",
         "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_main_rotate_left.xml"
     },

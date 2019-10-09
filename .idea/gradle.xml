@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bluetooth" />
             <option value="$PROJECT_DIR$/btdemo" />
+            <option value="$PROJECT_DIR$/ecg" />
             <option value="$PROJECT_DIR$/sdkdemo" />
           </set>
         </option>

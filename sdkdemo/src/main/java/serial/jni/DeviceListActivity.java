@@ -34,6 +34,11 @@ public class DeviceListActivity extends Activity {
 
     private Button mScanButton = null;
 
+
+    public void test(View view){
+        startActivity(new Intent(this,ECGActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +103,7 @@ public class DeviceListActivity extends Activity {
             }
             String address = info.substring(info.length() - 17);
             Intent intent;
-            intent = new Intent(DeviceListActivity.this, GLActivity.class);
+            intent = new Intent(DeviceListActivity.this, GLActivity2.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
             startActivity(intent);
         }
