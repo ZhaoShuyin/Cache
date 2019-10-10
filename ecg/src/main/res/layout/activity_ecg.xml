@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="connect"
-        android:text="连接设备"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="connect"
+            android:text="连接设备" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="testDraw"
+            android:text="测试绘图"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,13 +45,17 @@
             android:text="停止" />
     </LinearLayout>
 
+    <com.example.ecg.gl.EcgView
+        android:id="@+id/gl_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
     <TextView
         android:id="@+id/tv_ecg"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:textColor="#fff"
-        android:background="#000"/>
+        android:layout_height="100dp"
+        android:background="#555"
+        android:textColor="#fff" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -47,13 +65,11 @@
             android:id="@+id/tv_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:padding="10dp"
-            android:text="Hello World!" />
+            android:text="Hello World!"
+            android:textColor="#000" />
 
     </ScrollView>
-
-
 
 
 </LinearLayout>

@@ -5,12 +5,6 @@
     android:background="#DDDDDD"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试"
-        android:onClick="test"/>
-
     <ListView
         android:id="@+id/ls_devices"
         android:layout_width="match_parent"

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/bluetooth" />
             <option value="$PROJECT_DIR$/btdemo" />
             <option value="$PROJECT_DIR$/ecg" />
+            <option value="$PROJECT_DIR$/openGL_jni" />
             <option value="$PROJECT_DIR$/sdkdemo" />
             <option value="$PROJECT_DIR$/surface" />
           </set>

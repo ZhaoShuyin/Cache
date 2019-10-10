@@ -1,12 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
-INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-81:12
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:2:1-80:12
 	package
 		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:3:5-25
 		INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml
@@ -30,7 +30,7 @@ ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:8:5-80
 	android:name
 		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:8:22-78
 application
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:10:5-74:19
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:10:5-73:19
 	android:label
 		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:12:9-41
 	android:icon
@@ -75,26 +75,22 @@ category#android.intent.category.LAUNCHER
 ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:34:17-77
 	android:name
 		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:34:27-74
-activity#serial.jni.ECGActivity
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:38:9-58
-	android:name
-		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:38:19-56
 uses-permission#android.permission.BLUETOOTH
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:76:5-68
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:75:5-68
 	android:name
-		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:76:22-65
+		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:75:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:77:5-74
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:76:5-74
 	android:name
-		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:77:22-71
+		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:76:22-71
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:78:5-81
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:77:5-81
 	android:name
-		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:78:22-78
+		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:77:22-78
 uses-permission#android.permission.DISABLE_KEYGUARD
-ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:79:5-75
+ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:78:5-75
 	android:name
-		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:79:22-72
+		ADDED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml:78:22-72
 uses-sdk
 INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Projects\MyApplication\sdkdemo\src\main\AndroidManifest.xml

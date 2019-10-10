@@ -6,16 +6,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.PixelFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+//import com.example.ecg.view.GLView;
+
+import com.example.ecg.view.DrawUtils;
+
+import java.nio.FloatBuffer;
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.microedition.khronos.opengles.GL10;
 
 import serial.jni.BluConnectionStateListener;
 import serial.jni.DataUtils;
+import serial.jni.GLView;
 import serial.jni.NativeCallBack;
 
 public class ECGActivity extends AppCompatActivity {
@@ -24,10 +35,13 @@ public class ECGActivity extends AppCompatActivity {
     TextView tvEcg;
     BluetoothDevice bluetoothDevice;
     DataUtils data;
+
+
     private BluetoothAdapter bluetoothAdapter;
     private boolean isConnecting = false;
     private boolean isWaitting = false;
     private short[] shorts = new short[12];
+    private ConcurrentLinkedQueue<Short> mEcgQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +49,16 @@ public class ECGActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ecg);
         textView = findViewById(R.id.tv_msg);
         tvEcg = findViewById(R.id.tv_ecg);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     public void show(final String msg) {
@@ -286,18 +310,30 @@ public class ECGActivity extends AppCompatActivity {
     public void start(View view) {
         if (data != null) {
             data.gatherStart(new NativeMsg());
+
         } else {
             show("没有绑定设备");
         }
-
     }
+
 
     public void stop(View view) {
         if (data != null) {
             data.gatherEnd();
+
+
         } else {
             show("没有绑定设备");
         }
     }
+
+    public void testDraw(View view) {
+
+    }
+
+
+
+
+
 
 }

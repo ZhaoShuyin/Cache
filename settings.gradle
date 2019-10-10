@@ -1,2 +1,2 @@
-include ':app', ':sdkdemo', ':bluetooth', ':btdemo', ':ecg', ':surface'
+include ':app', ':sdkdemo', ':bluetooth', ':btdemo', ':ecg', ':surface', ':openGL_jni'
 //include ':ba'

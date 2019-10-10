@@ -35,7 +35,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="serial.jni.ECGActivity"/>
 
 <!--   使用USB OTG设备8000G，8100G时打开此注释，并修改GLActivity中关于data对象创建的代码，参照注释修改    -->
 

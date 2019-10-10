@@ -42,27 +42,29 @@ public class SurfaceActivity extends Activity {
             myThread = new MyThread(holder);// 创建一个绘图线程
         }
 
+        //1.首先调用view添加至窗口
         @Override
         protected void onAttachedToWindow() {
             super.onAttachedToWindow();
-            Log.e(TAG, "onAttachedToWindow: " );
+            Log.e(TAG, "onAttachedToWindow: ");
         }
 
-
+        //2.添加至窗口后,显示
         @Override
         protected void onWindowVisibilityChanged(int visibility) {
             super.onWindowVisibilityChanged(visibility);
-            Log.e(TAG, "onWindowVisibilityChanged: " );
+            Log.e(TAG, "onWindowVisibilityChanged: ");
         }
 
-
+        //从窗口拆卸
         @Override
         protected void onDetachedFromWindow() {
             super.onDetachedFromWindow();
-            Log.e(TAG, "onDetachedFromWindow: " );
+            Log.e(TAG, "onDetachedFromWindow: ");
         }
 
 
+        //测量View (调用两次)
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -70,6 +72,7 @@ public class SurfaceActivity extends Activity {
         }
 
 
+        //View的绘制
         @Override
         public void draw(Canvas canvas) {
             super.draw(canvas);
@@ -77,24 +80,7 @@ public class SurfaceActivity extends Activity {
         }
 
 
-        @Override
-        protected void dispatchDraw(Canvas canvas) {
-            super.dispatchDraw(canvas);
-            Log.e(TAG, "dispatchDraw: ");
-        }
-
-        @Override
-        public boolean gatherTransparentRegion(Region region) {
-            Log.e(TAG, "gatherTransparentRegion: " );
-            return super.gatherTransparentRegion(region);
-        }
-
-        //
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            Log.e(TAG, "surfaceChanged: ");
-        }
-
+        //一般在该方法中启动绘图的线程
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             Log.e(TAG, "surfaceCreated: ");
@@ -102,11 +88,34 @@ public class SurfaceActivity extends Activity {
             myThread.start();
         }
 
+        //surface尺寸发生改变的时候调用,如横竖屏切换
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            Log.e(TAG, "surfaceChanged: ");
+        }
+
+        //surface被销毁的时候调用,一般在该方法中停止绘图线程。
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
             Log.e(TAG, "surfaceDestroyed: ");
             myThread.isRun = false;
         }
+
+        //分发绘制事件
+        @Override
+        protected void dispatchDraw(Canvas canvas) {
+            super.dispatchDraw(canvas);
+            Log.e(TAG, "dispatchDraw: ");
+        }
+
+        //收集透明范围
+        @Override
+        public boolean gatherTransparentRegion(Region region) {
+            Log.e(TAG, "gatherTransparentRegion: ");
+            return super.gatherTransparentRegion(region);
+        }
+
+
 
     }
 
