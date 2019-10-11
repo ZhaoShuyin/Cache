@@ -44,6 +44,10 @@
         "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\anim\\sat_item_anticipate_interpolator.xml"
     },
     {
+        "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_glsurfaceview2.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_glsurfaceview2.xml"
+    },
+    {
         "merged": "D:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\res\\merged\\debug\\layout_activity_glsurfaceview.xml.flat",
         "source": "D:\\Projects\\MyApplication\\sdkdemo\\src\\main\\res\\layout\\activity_glsurfaceview.xml"
     },

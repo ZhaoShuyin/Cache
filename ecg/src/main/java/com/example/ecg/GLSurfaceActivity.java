@@ -185,6 +185,7 @@ public class GLSurfaceActivity extends Activity {
 
         /**
          * 方法持续调用,刷新每帧
+         * 绘制点,线,面 https://blog.csdn.net/weixin_34242819/article/details/92066250
          */
         @Override
         public void onDrawFrame(GL10 gl) {
@@ -193,11 +194,12 @@ public class GLSurfaceActivity extends Activity {
             gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             //帧清除屏幕到黑色
             gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-            //
-            gl.glTranslatef(0.0f, 0.0f, 0.0F);
+            //移动坐标系
+             gl.glTranslatef(0.0f, 0.0f, 0.0F);
             //设置当前颜色
             gl.glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
             //定义一个顶点坐标矩阵(调用glDrawArrays方法或glDrawElements方法时会使用)
+            //每个顶点的坐标维数，必须是2, 3或者4，初始值是4
             gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mVB);
             //由矩阵数据渲染图元
             gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 6);

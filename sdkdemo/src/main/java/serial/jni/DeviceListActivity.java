@@ -98,7 +98,7 @@ public class DeviceListActivity extends Activity {
             }
             String address = info.substring(info.length() - 17);
             Intent intent;
-            intent = new Intent(DeviceListActivity.this, GLActivity.class);
+            intent = new Intent(DeviceListActivity.this, GLActivity2.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
             startActivity(intent);
         }

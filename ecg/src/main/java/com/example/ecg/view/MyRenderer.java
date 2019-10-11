@@ -82,7 +82,50 @@ public class MyRenderer implements Renderer {
         this.rect621 = new float[]{-6.0F * this.xunit, 6.0F, 6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, -3.5F};
         this.rect621c = new float[]{-6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -6.0F};
         this.lead621 = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
-        this.lead = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
+        this.lead = new float[]{
+                -3.0F * this.xunit, 0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit,
+                0.0F, -this.xunit, 0.0F,
+                0.0F, 0.0F, this.xunit,
+                0.0F, 2.0F * this.xunit,
+                0.0F, 3.0F * this.xunit,
+                0.0F, -3.0F * this.xunit,
+                0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
         this.textures = new int[1];
         this.leadString = new String[]{"Ⅰ", "Ⅱ", "Ⅲ", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"};
         this.mRendererDelay = 5;
@@ -767,20 +810,23 @@ public class MyRenderer implements Renderer {
     }
 
 
-
-
     public void DrawWave(GL10 gl) {
         gl.glLoadIdentity();
         //坐标系移动
         gl.glTranslatef(this.DX, 0.0F, -5.0F);
+        //绕X轴旋转
         gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
+        //设置颜色
         gl.glColor4f(this.colorRED, this.colorGREEN, this.colorBLUE, this.colorALPHA);
+        //计算顶点坐标
         FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.lead);
         gl.glVertexPointer(2, 5126, 0, verBuffer);
         gl.glEnableClientState('聴');
-        gl.glDrawArrays(3, 0, 7);
-        gl.glDrawArrays(3, 7, 7);
-        gl.glDrawArrays(3, 14, 7);
+        //绘制
+        //参数1.渲染模式 , 参数2.起始索引 , 参数三,使用个数 (绘制非闭合线)
+        gl.glDrawArrays(3, 0, 7);  //渲染0-6
+        gl.glDrawArrays(3, 7, 7);  //渲染7-13
+        gl.glDrawArrays(3, 14, 7); //渲染14-20
         gl.glDrawArrays(3, 21, 7);
         gl.glDrawArrays(3, 28, 7);
         gl.glDrawArrays(3, 35, 7);
