@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.outsource.ecg"
+    android:versionCode="1"
+    android:versionName="0.1" >
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ecg_mobile"
+        android:label="@string/ecg_client_title" >
+        <activity
+            android:name="com.outsource.ecg.app.MainActivity"
+            android:label="@string/ecg_client_title" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.outsource.ecg.app.RTEcgChartActivity"
+            android:label="@string/rt_ecg_chart_title" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.outsource.ecg.app.EcgLoadHistoryActivity"
+            android:label="@string/load_user_history_title" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.outsource.ecg.app.DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_device" 
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.outsource.ecg.app.EcgUserManageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/user_manager_title" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.outsource.ecg.ECG_MANAGER_MANAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.outsource.ecg.app.CreateNewUserActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/new_user_title" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.outsource.ecg.ECG_NEW_USER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.outsource.ecg.app.EcgUserHistroyRecordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/view_histroy_records_title" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.outsource.ecg.VIEW_HISTORY_RECORDS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <receiver android:name="com.outsource.ecg.app.SDcardMountReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_SCANNER_STARTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_BAD_REMOVAL" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10" />
+
+</manifest>

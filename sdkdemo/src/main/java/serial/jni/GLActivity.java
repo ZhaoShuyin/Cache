@@ -78,20 +78,23 @@ public class GLActivity extends Activity {
         btnStartECGRenderer = (Button) findViewById(R.id.btnStartRenderer);
         btnStopECGRenderer = (Button) findViewById(R.id.btnStopRenderer);
 
-        btnStartECGRenderer.setEnabled(false);
+        btnStartECGRenderer.setEnabled(true);
         //开始连接
         btnStartConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnStartConnect.setEnabled(false);
+                btnStartConnect.setEnabled(true);
                 data.gatherStart(new NativeMsg());
+                mEcgQueue = new ConcurrentLinkedQueue<Short>();
+                glView.setEcgDataBuf(mEcgQueue);
+                glView.startRenderer();
             }
         });
         //断开连接
         btnStopConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnStartECGRenderer.setEnabled(false);
+                btnStartECGRenderer.setEnabled(true);
                 data.gatherEnd();
                 glView.stopRenderer();
                 btnStartConnect.setEnabled(true);
@@ -101,11 +104,8 @@ public class GLActivity extends Activity {
         btnStartECGRenderer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //数据源
                 mEcgQueue = new ConcurrentLinkedQueue<Short>();
-                //绑定数据
                 glView.setEcgDataBuf(mEcgQueue);
-                //开始绘图
                 glView.startRenderer();
             }
         });
@@ -162,7 +162,7 @@ public class GLActivity extends Activity {
                 Log.e("aecg", "ecgDataToAECG ret = " + ret);
             }
         });
-        //emg
+        //emg(肌电)
         b3.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -193,13 +193,6 @@ public class GLActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                data.cancelCase();// 取消正在保存的文件
-/*                if (!isFinishActivity) {
-                    isFinishActivity = true;
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, DeviceListActivity.class);
-                    startActivity(intent);
-                    finish();
-                }*/
                 finish();
             }
         });
@@ -207,7 +200,7 @@ public class GLActivity extends Activity {
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.saveCase(Environment.getExternalStorageDirectory() + "/",
+                data.saveCase(Environment.getExternalStorageDirectory() + "/aaa/",
                         strCase, 10);// 存储文件 参数为路径，文件名，存储秒数
             }
         });
@@ -231,7 +224,7 @@ public class GLActivity extends Activity {
                 q++;
             }
         });
-        //speed
+        //speed<<速度>>
         b7.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -256,7 +249,7 @@ public class GLActivity extends Activity {
 
             }
         });
-        //gain
+        //gain<<增益>>
         b8.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -324,66 +317,6 @@ public class GLActivity extends Activity {
         }
         //*/
         // 演示文件采集
-//         data = new DataUtils(Environment.getExternalStorageDirectory().getPath()+"/demo.ecg");
-/*
-        // USB 8000G 设备支持
-		mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-		data = new DataUtils(mUsbManager, new USBConnectionStateListener() {
-
-			@Override
-			public void OnUSBConnectionError(int state) {
-				// TODO Auto-generated method stub
-				switch (state) {
-
-				case USBConnectionStateListener.ERROR_REMOVE_DEVICE:
-					mHandler.obtainMessage(MESSAGE_USB_CONNECT_REMOVE_DEVICE)
-							.sendToTarget();
-					break;
-				case USBConnectionStateListener.ERROR_NO_USB_PERMISSION:
-					mHandler.obtainMessage(
-							MESSAGE_USB_CONNECT_NO_USB_PERMISSION)
-							.sendToTarget();
-					break;
-				case USBConnectionStateListener.ERROR_INTERRUPTED:
-					mHandler.obtainMessage(MESSAGE_USB_CONNECT_INTERRUPTED)
-							.sendToTarget();
-					break;
-				case USBConnectionStateListener.ERROR_SETTING_DEVICE:
-					mHandler.obtainMessage(
-							MESSAGE_USB_CONNECT_ERROR_SETTING_DEVICE)
-							.sendToTarget();
-				case USBConnectionStateListener.ERROR_OPEN_DEVICE:
-					mHandler.obtainMessage(
-							MESSAGE_USB_CONNECT_ERROR_OPEN_DEVICE)
-							.sendToTarget();
-					break;
-				}
-			}
-
-			@Override
-			public void OnUSBConnectSuccess() {
-				// TODO Auto-generated method stub
-				mHandler.obtainMessage(MESSAGE_USB_CONNECT_SUCCESS)
-						.sendToTarget();
-			}
-
-			@Override
-			public void OnUSBConnectStart() {
-				// TODO Auto-generated method stub
-				mHandler.obtainMessage(MESSAGE_USB_CONNECT_START)
-						.sendToTarget();
-			}
-
-			@Override
-			public void OnUSBConnectFaild() {
-				// TODO Auto-generated method stub
-				mHandler.obtainMessage(MESSAGE_USB_CONNECT_FAILED)
-						.sendToTarget();
-			}
-		});
-
-*/
-
         // 以下关于glView操作为必要操作，请不要更改
         glView = (GLView) this.findViewById(R.id.GLWave);
 //		glView.setBackground(Color.TRANSPARENT, Color.rgb(111, 110, 110));//2018-06-21 注释掉,避免Bitmap出现异常
@@ -473,7 +406,7 @@ public class GLActivity extends Activity {
                 case MESSAGE_CONNECT_INTERRUPTED:
 //				Log.e("BL", "INT");
                     btnStartConnect.setEnabled(true);
-                    btnStartECGRenderer.setEnabled(false);
+                    btnStartECGRenderer.setEnabled(true);
                     glView.stopRenderer();
                     mEcgQueue = null;
                     Toast.makeText(mContext, "Connect INT", Toast.LENGTH_SHORT).show();
@@ -578,7 +511,7 @@ public class GLActivity extends Activity {
 
         @Override
         public void callWaveColorMsg(boolean flag) {
-            Log.e("WaveColor", "" + flag);
+            Log.e("ecgdata", "波形变化 :" + flag);
             if (flag) {
                 // 波形稳定后颜色变为绿色
                 glView.setRendererColor(0, 1.0f, 0, 0);

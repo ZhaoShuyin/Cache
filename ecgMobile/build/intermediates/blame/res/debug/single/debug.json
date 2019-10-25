@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_icon.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable-ldpi\\icon.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_ecg_client_rt_ecg.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\ecg_client_rt_ecg.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_all_app_entry_list.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\all_app_entry_list.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_write_arrow.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\write_arrow.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_ecg_server_main.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\ecg_server_main.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\menu_server_option_menu.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\menu\\server_option_menu.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\menu_main_option_menu.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\menu\\main_option_menu.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\menu_user_manager_menu.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\menu\\user_manager_menu.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_plusminus.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\plusminus.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_ecg_client_history_records.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\ecg_client_history_records.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_select_childrow.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\select_childrow.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_select_recordrow.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\select_recordrow.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_message.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\message.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_plus.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\plus.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_device_list.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\device_list.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\menu_realtime_ecg_option.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\menu\\realtime_ecg_option.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_device_name.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\device_name.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_ecg_mobile.jpg.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\ecg_mobile.jpg"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_grouprow.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\grouprow.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable-mdpi\\icon.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_minus.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\minus.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_new_user.jpg.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\new_user.jpg"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_childrow.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\childrow.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_new_user.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\new_user.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\layout_app_entry_item.xml.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\layout\\app_entry_item.xml"
+    },
+    {
+        "merged": "D:\\Projects\\MyApplication\\ecgMobile\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
+        "source": "D:\\Projects\\MyApplication\\ecgMobile\\src\\main\\res\\drawable-hdpi\\icon.png"
+    }
+]

@@ -1,4 +1,0 @@
-#Fri Oct 11 11:56:25 CST 2019
-base.0=D\:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\transforms\\dexMerger\\debug\\6
-renamed.0=classes.dex
-file.0=D\:\\Projects\\MyApplication\\sdkdemo\\build\\intermediates\\transforms\\dexMerger\\debug\\6\\classes.dex
