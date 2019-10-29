@@ -25,6 +25,6 @@ public class MultiRender implements GLSurfaceView.Renderer{
     public void onDrawFrame(GL10 gl) {
         //设置图层透明度
         //gl.glAlphaFunc();
-        gl.
+//        gl.
     }
 }
