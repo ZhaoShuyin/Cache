@@ -1160,10 +1160,10 @@ public class MyRenderer implements Renderer {
         this.CX621 = -8.6F;
         this.IsDrawFont = Boolean.valueOf(true);
         gl.glViewport(0, 0, width, height);
-        gl.glMatrixMode(5889);
+        gl.glMatrixMode(5889);//GL10.GL_PROJECTION
         gl.glLoadIdentity();
         gl.glFrustumf(-ratio, ratio, -1.0F, 1.0F, 1.0F, 10.0F);
-        gl.glMatrixMode(5888);
+        gl.glMatrixMode(5888);//GL10.GL_MODELVIEW
         gl.glLoadIdentity();
         this.mCounter = 0;
     }

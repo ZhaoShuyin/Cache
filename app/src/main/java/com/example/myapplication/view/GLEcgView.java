@@ -35,6 +35,16 @@ import javax.microedition.khronos.opengles.GL10;
  * https://wenku.baidu.com/view/27a8a847960590c69fc3767a.html
  * 6.多图层
  * https://blog.csdn.net/u010462297/article/details/50589991
+ * 7.中文API
+ * https://blog.csdn.net/flycatdeng/article/details/82588903
+ * 8.学习网站
+ * https://learnopengl-cn.readthedocs.io/zh/latest/
+ * 9.glMatrixMode()方法
+ * https://blog.csdn.net/jiangdf/article/details/8460012
+ * 10.opengl官网
+ * https://www.khronos.org/opengl/wiki
+ * 11.帧缓存对象 FBO
+ *
  */
 public class GLEcgView extends GLSurfaceView {
 
@@ -48,8 +58,8 @@ public class GLEcgView extends GLSurfaceView {
         super(context, attrs);
         Log.e(TAG, "GLSView: 构造函数");
         //设置渲染器
-        setRenderer(new OpenGLRender());
-//        setRenderer(new MyRender());
+//        setRenderer(new OpenGLRender());
+        setRenderer(new MyRender());
         //设置非主动渲染(须在 setRenderer() 之后)
         //1.非主动渲染RENDERMODE_WHEN_DIRTY(0) 2.RENDERMODE_CONTINUOUSLY主动渲染(1)
 //        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
