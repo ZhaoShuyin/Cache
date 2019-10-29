@@ -24,7 +24,8 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:textColor="#ff000000"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:text="@{@string/thisisatest}"/>
     </LinearLayout>
 
 

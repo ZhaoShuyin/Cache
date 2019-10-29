@@ -6,8 +6,8 @@
 package com.example.ecg.view;
 
 import android.graphics.Bitmap;
-import android.opengl.GLUtils;
 import android.opengl.GLSurfaceView.Renderer;
+import android.opengl.GLUtils;
 import android.util.Log;
 
 import com.example.gltest.GLJNILIB;
@@ -19,6 +19,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import serial.jni.DrawUtils;
+import serial.jni.GLView;
 
 public class MyRenderer implements Renderer {
     private GLJNILIB gljni;
@@ -72,9 +75,9 @@ public class MyRenderer implements Renderer {
     private float[][] leadVertex;
     private FloatBuffer[] mVertexBuffer;
     private FloatBuffer[] mCoordBuffer;
-    private ConcurrentLinkedQueue<Short> mEcgQueue;//数据源
-    private boolean isEcgQueue;                    //是否显示绘制
-    private boolean IsClearScreen;                 //
+    private ConcurrentLinkedQueue<Short> mEcgQueue;
+    private boolean isEcgQueue;   //是否开始刷新显示数据
+    private boolean IsClearScreen;//是否清空屏幕
 
     public MyRenderer() {
         this.rect = new float[]{-6.0F * this.xunit, 6.0F, 6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -6.0F};
@@ -82,50 +85,7 @@ public class MyRenderer implements Renderer {
         this.rect621 = new float[]{-6.0F * this.xunit, 6.0F, 6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, -3.5F};
         this.rect621c = new float[]{-6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -6.0F};
         this.lead621 = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
-        this.lead = new float[]{
-                -3.0F * this.xunit, 0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit,
-                0.0F, -this.xunit, 0.0F,
-                0.0F, 0.0F, this.xunit,
-                0.0F, 2.0F * this.xunit,
-                0.0F, 3.0F * this.xunit,
-                0.0F, -3.0F * this.xunit,
-                0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
+        this.lead = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
         this.textures = new int[1];
         this.leadString = new String[]{"Ⅰ", "Ⅱ", "Ⅲ", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"};
         this.mRendererDelay = 5;
@@ -175,20 +135,16 @@ public class MyRenderer implements Renderer {
 
     }
 
-
-    public void setWaveColor(float r, float g, float b, float a) {
-        this.colorRED = r;
-        this.colorGREEN = g;
-        this.colorBLUE = b;
-        this.colorALPHA = a;
-    }
-
+    /**
+     * 帧刷新
+     */
     @Override
     public void onDrawFrame(GL10 gl) {
         if (GLView.isGather) {
             if (this.IsQualcomm && this.IsTilingQCOM) {
                 GLJNILIB.setStartQcom(0, 0, this.glWidth, this.glHeight);
             }
+
             switch (this.displayMode) {
                 case 0:
                     if (this.IsDrawFont.booleanValue() || this.IsClearScreen) {
@@ -196,7 +152,6 @@ public class MyRenderer implements Renderer {
                         Log.e("LeadChange", "<->" + this.displayMode);
                         this.DX = -9.0F;
                         this.CX = -8.6F;
-                        //绘制刻度数据
                         this.DrawFont(gl, DrawUtils.vertex_1, this.leadString[0], 0);
                         this.DrawFont(gl, DrawUtils.vertex_2, this.leadString[1], 1);
                         this.DrawFont(gl, DrawUtils.vertex_3, this.leadString[2], 2);
@@ -212,11 +167,11 @@ public class MyRenderer implements Renderer {
                         this.IsDrawFont = Boolean.valueOf(false);
                         this.IsClearScreen = false;
                     }
-                    //计算显示数据
+
                     this.UpdateEcgData();
                     if (this.mCounter > 5) {
-                        this.ClearRect(gl);
-                        this.DrawWave(gl);
+                        this.ClearRect(gl);//清空待绘制区域
+                        this.DrawWave(gl); //绘制波形
                     } else if (this.mCounter == 5) {
                         Log.e("MyRenderer", "" + this.mCounter);
                         if (GLView.msg != null) {
@@ -361,13 +316,22 @@ public class MyRenderer implements Renderer {
         }
     }
 
-    //计算A波形数据
+    public void setWaveColor(float r, float g, float b, float a) {
+        this.colorRED = r;
+        this.colorGREEN = g;
+        this.colorBLUE = b;
+        this.colorALPHA = a;
+    }
+
+    /**
+     * 初步计算 temp , lead 数据
+     */
     public void UpdateEcgData() {
         if (GLView.isGather) {
+            //取出12个数据到 temp
             this.getEcgData();
             ++this.mCounter;
         }
-
         this.lead[1] = (float) this.temp_Last[0] * this.scale * this.amend + 4.4F - 0.35F;
         this.lead[3] = (float) this.temp[0] * this.scale * this.amend + 4.4F - 0.35F;
         this.lead[5] = (float) this.temp[12] * this.scale * this.amend + 4.4F - 0.35F;
@@ -467,10 +431,129 @@ public class MyRenderer implements Renderer {
         if (this.mSpeed != this.xunit) {
             this.XUpdate();
         }
+    }
+
+    /**
+     * 取出12个数据到temp
+     */
+    private void getEcgData() {
+        int index = 0;
+        while (index < 6 && this.isEcgQueue) {
+            if (this.mEcgQueue != null && !this.mEcgQueue.isEmpty()) {
+                for (int i = 0; i < 12 && this.isEcgQueue; ++i) {
+                    Short val = (Short) this.mEcgQueue.poll();
+                    if (val != null) {
+                        this.temp[12 * index + i] = val.shortValue();
+                    } else if (i > 0) {
+                        --i;
+                    }
+                }
+                ++index;
+            } else if (this.mEcgQueue == null) {
+                break;
+            }
+        }
 
     }
 
-    //计算B波形数据
+    /**
+     * 刷新渲染数据
+     */
+    public void XUpdate() {
+        this.xunit = this.mSpeed;
+
+        for (int i = 0; i < 168; i += 14) {
+            this.lead[i] = -3.0F * this.xunit;
+            this.lead[2 + i] = -2.0F * this.xunit;
+            this.lead[4 + i] = -this.xunit;
+            this.lead[8 + i] = this.xunit;
+            this.lead[10 + i] = 2.0F * this.xunit;
+            this.lead[12 + i] = 3.0F * this.xunit;
+        }
+
+        this.lead621[0] = -3.0F * this.xunit;
+        this.lead621[2] = -2.0F * this.xunit;
+        this.lead621[4] = -this.xunit;
+        this.lead621[8] = this.xunit;
+        this.lead621[10] = 2.0F * this.xunit;
+        this.lead621[12] = 3.0F * this.xunit;
+        this.rect[0] = -6.0F * this.xunit;
+        this.rect[2] = 6.0F * this.xunit;
+        this.rect[4] = 6.0F * this.xunit;
+        this.rect[6] = -6.0F * this.xunit;
+        this.rect[8] = 6.0F * this.xunit;
+        this.rect[10] = -6.0F * this.xunit;
+        this.rect621[0] = -6.0F * this.xunit;
+        this.rect621[2] = 6.0F * this.xunit;
+        this.rect621[4] = 6.0F * this.xunit;
+        this.rect621[6] = -6.0F * this.xunit;
+        this.rect621[8] = 6.0F * this.xunit;
+        this.rect621[10] = -6.0F * this.xunit;
+        this.rect621c[0] = -6.0F * this.xunit;
+        this.rect621c[2] = 6.0F * this.xunit;
+        this.rect621c[4] = 6.0F * this.xunit;
+        this.rect621c[6] = -6.0F * this.xunit;
+        this.rect621c[8] = 6.0F * this.xunit;
+        this.rect621c[10] = -6.0F * this.xunit;
+    }
+
+    /**
+     * 清空待绘制部分区域
+     */
+    public void ClearRect(GL10 gl) {
+        gl.glLoadIdentity();
+        gl.glTranslatef(this.CX, 0.0F, -5.0F);
+        gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
+        gl.glColor4f(0.0F, 0.0F, 0.0F, 0.0F);
+        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.rect);
+        gl.glVertexPointer(2, 5126, 0, verBuffer);
+        gl.glEnableClientState('聴');
+        gl.glDrawArrays(4, 0, 3);
+        gl.glDrawArrays(4, 3, 3);
+        gl.glDisableClientState('聴');
+        gl.glFinish();
+        this.CX += 6.0F * this.xunit;
+        if (this.CX >= 10.12F) {
+            this.CX = -9.0F;
+        }
+    }
+
+    /**
+     * 绘制波形
+     */
+    public void DrawWave(GL10 gl) {
+        gl.glLoadIdentity();
+        //平移坐标系
+        gl.glTranslatef(this.DX, 0.0F, -5.0F);
+        gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
+        gl.glColor4f(this.colorRED, this.colorGREEN, this.colorBLUE, this.colorALPHA);
+        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.lead);
+        //单元长度 2 ,
+        gl.glVertexPointer(2, GL10.GL_FLOAT, 0, verBuffer);
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+        //以直线模式绘制
+        //gl.glDrawArrays(GLES20.GL_LINE_STRIP, 0, 7);
+        gl.glDrawArrays(3, 0, 7); //渲染第一组(八个)直线
+        gl.glDrawArrays(3, 7, 7); //渲染第二组(八个)直线
+        gl.glDrawArrays(3, 14, 7);//渲染第三组(八个)直线
+        gl.glDrawArrays(3, 21, 7);
+        gl.glDrawArrays(3, 28, 7);
+        gl.glDrawArrays(3, 35, 7);
+        gl.glDrawArrays(3, 42, 7);
+        gl.glDrawArrays(3, 49, 7);
+        gl.glDrawArrays(3, 56, 7);
+        gl.glDrawArrays(3, 63, 7);
+        gl.glDrawArrays(3, 70, 7);
+        gl.glDrawArrays(3, 77, 7);
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);//'聴'
+        gl.glFinish();
+        this.DX += 6.0F * this.xunit;
+        if (this.DX >= 10.12F) {
+            this.DX = -9.0F;
+        }
+
+    }
+
     public void UpdateEcgData62() {
         if (GLView.isGather) {
             this.getEcgData();
@@ -579,7 +662,6 @@ public class MyRenderer implements Renderer {
 
     }
 
-    //计算C波形数据
     public void UpdateEcgData621() {
         if (GLView.isGather) {
             this.getEcgData();
@@ -700,7 +782,6 @@ public class MyRenderer implements Renderer {
 
     }
 
-    //计算D波形数据
     public void UpdateEcgData26() {
         if (GLView.isGather) {
             this.getEcgData();
@@ -805,42 +886,6 @@ public class MyRenderer implements Renderer {
         this.temp_Last[11] = this.temp[71];
         if (this.mSpeed != this.xunit) {
             this.XUpdate();
-        }
-
-    }
-
-
-    public void DrawWave(GL10 gl) {
-        gl.glLoadIdentity();
-        //坐标系移动
-        gl.glTranslatef(this.DX, 0.0F, -5.0F);
-        //绕X轴旋转
-        gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
-        //设置颜色
-        gl.glColor4f(this.colorRED, this.colorGREEN, this.colorBLUE, this.colorALPHA);
-        //计算顶点坐标
-        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.lead);
-        gl.glVertexPointer(2, 5126, 0, verBuffer);
-        gl.glEnableClientState('聴');
-        //绘制
-        //参数1.渲染模式 , 参数2.起始索引 , 参数三,使用个数 (绘制非闭合线)
-        gl.glDrawArrays(3, 0, 7);  //渲染0-6
-        gl.glDrawArrays(3, 7, 7);  //渲染7-13
-        gl.glDrawArrays(3, 14, 7); //渲染14-20
-        gl.glDrawArrays(3, 21, 7);
-        gl.glDrawArrays(3, 28, 7);
-        gl.glDrawArrays(3, 35, 7);
-        gl.glDrawArrays(3, 42, 7);
-        gl.glDrawArrays(3, 49, 7);
-        gl.glDrawArrays(3, 56, 7);
-        gl.glDrawArrays(3, 63, 7);
-        gl.glDrawArrays(3, 70, 7);
-        gl.glDrawArrays(3, 77, 7);
-        gl.glDisableClientState('聴');
-        gl.glFinish();
-        this.DX += 6.0F * this.xunit;
-        if (this.DX >= 10.12F) {
-            this.DX = -9.0F;
         }
 
     }
@@ -994,25 +1039,6 @@ public class MyRenderer implements Renderer {
         gl.glDrawArrays(4, 3, 3);
         gl.glDisableClientState('聴');
         gl.glFinish();
-    }
-
-    public void ClearRect(GL10 gl) {
-        gl.glLoadIdentity();
-        gl.glTranslatef(this.CX, 0.0F, -5.0F);
-        gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
-        gl.glColor4f(0.0F, 0.0F, 0.0F, 0.0F);
-        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.rect);
-        gl.glVertexPointer(2, 5126, 0, verBuffer);
-        gl.glEnableClientState('聴');
-        gl.glDrawArrays(4, 0, 3);
-        gl.glDrawArrays(4, 3, 3);
-        gl.glDisableClientState('聴');
-        gl.glFinish();
-        this.CX += 6.0F * this.xunit;
-        if (this.CX >= 10.12F) {
-            this.CX = -9.0F;
-        }
-
     }
 
     public void ClearRect62(GL10 gl, boolean sign) {
@@ -1171,44 +1197,6 @@ public class MyRenderer implements Renderer {
         gl.glHint(3154, 4354);
     }
 
-    public void XUpdate() {
-        this.xunit = this.mSpeed;
-
-        for (int i = 0; i < 168; i += 14) {
-            this.lead[i] = -3.0F * this.xunit;
-            this.lead[2 + i] = -2.0F * this.xunit;
-            this.lead[4 + i] = -this.xunit;
-            this.lead[8 + i] = this.xunit;
-            this.lead[10 + i] = 2.0F * this.xunit;
-            this.lead[12 + i] = 3.0F * this.xunit;
-        }
-
-        this.lead621[0] = -3.0F * this.xunit;
-        this.lead621[2] = -2.0F * this.xunit;
-        this.lead621[4] = -this.xunit;
-        this.lead621[8] = this.xunit;
-        this.lead621[10] = 2.0F * this.xunit;
-        this.lead621[12] = 3.0F * this.xunit;
-        this.rect[0] = -6.0F * this.xunit;
-        this.rect[2] = 6.0F * this.xunit;
-        this.rect[4] = 6.0F * this.xunit;
-        this.rect[6] = -6.0F * this.xunit;
-        this.rect[8] = 6.0F * this.xunit;
-        this.rect[10] = -6.0F * this.xunit;
-        this.rect621[0] = -6.0F * this.xunit;
-        this.rect621[2] = 6.0F * this.xunit;
-        this.rect621[4] = 6.0F * this.xunit;
-        this.rect621[6] = -6.0F * this.xunit;
-        this.rect621[8] = 6.0F * this.xunit;
-        this.rect621[10] = -6.0F * this.xunit;
-        this.rect621c[0] = -6.0F * this.xunit;
-        this.rect621c[2] = 6.0F * this.xunit;
-        this.rect621c[4] = 6.0F * this.xunit;
-        this.rect621c[6] = -6.0F * this.xunit;
-        this.rect621c[8] = 6.0F * this.xunit;
-        this.rect621c[10] = -6.0F * this.xunit;
-    }
-
     private void initFontTextures(GL10 gl) {
         Bitmap[] leadBitmap = new Bitmap[12];
         this.mVertexBuffer = new FloatBuffer[12];
@@ -1234,8 +1222,8 @@ public class MyRenderer implements Renderer {
     private void drawFontTextures(GL10 gl) {
         gl.glLoadIdentity();
         gl.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        gl.glEnableClientState('聴');
-        gl.glEnableClientState('聸');
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);//'聴' 8074
+        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);//'聸' 8078
         gl.glTranslatef(0.0F, 0.0F, -5.1F);
 
         for (int i = 0; i < 12; ++i) {
@@ -1247,8 +1235,8 @@ public class MyRenderer implements Renderer {
             gl.glDrawArrays(5, 0, 4);
         }
 
-        gl.glDisableClientState('聴');
-        gl.glDisableClientState('聸');
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);//'聴' 8074
+        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);//'聸' 8078
         gl.glDisable(3553);
         gl.glFinish();
     }
@@ -1261,28 +1249,10 @@ public class MyRenderer implements Renderer {
         this.isEcgQueue = draw;
     }
 
-    private void getEcgData() {
-        int index = 0;
-
-        while (index < 6 && this.isEcgQueue) {
-            if (this.mEcgQueue != null && !this.mEcgQueue.isEmpty()) {
-                for (int i = 0; i < 12 && this.isEcgQueue; ++i) {
-                    Short val = (Short) this.mEcgQueue.poll();
-                    if (val != null) {
-                        this.temp[12 * index + i] = val.shortValue();
-                    } else if (i > 0) {
-                        --i;
-                    }
-                }
-
-                ++index;
-            } else if (this.mEcgQueue == null) {
-                break;
-            }
-        }
-
-    }
-
+    /**
+     * 设置是否清空屏幕
+     * @param isClearScreen
+     */
     public void setClearScreen(boolean isClearScreen) {
         this.IsClearScreen = isClearScreen;
     }

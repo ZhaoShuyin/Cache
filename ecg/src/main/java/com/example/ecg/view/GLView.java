@@ -1,18 +1,15 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
 package com.example.ecg.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
-import android.os.Process;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import serial.jni.BackgroundUtils;
 
 public class GLView extends GLSurfaceView {
     public static Handler msg = null;
@@ -111,21 +108,21 @@ public class GLView extends GLSurfaceView {
         }
 
         public void run() {
-            Process.setThreadPriority(-8);
+//            WaveRenderer.this.setPriority(-8);
+//            Process.setThreadPriority(-8);
 
             try {
                 sleep(2000L);
-            } catch (InterruptedException var3) {
-                var3.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             while(GLView.isRenderer) {
                 GLView.this.requestRender();
-
                 try {
-                    sleep(20L);
-                } catch (InterruptedException var2) {
-                    var2.printStackTrace();
+                    sleep(20L); //20毫秒刷新一次数据
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
 

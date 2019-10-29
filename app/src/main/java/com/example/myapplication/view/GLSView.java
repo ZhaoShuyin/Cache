@@ -31,6 +31,26 @@ public class GLSView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
+
+    class MyThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                drawWave();
+            }
+        }
+    }
+
+    private void drawWave() {
+
+    }
+
     class MyRender implements Renderer {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {

@@ -120,7 +120,7 @@ public class EcgView extends SurfaceView implements SurfaceHolder.Callback {
                 mPaint.setColor(0xff0000ff);
             }
         }
-        Log.e(TAG, "帧刷新 position: " + position);
+//        Log.e(TAG, "帧刷新 position: " + position);
         int left = mUnit * position;
         int top = 0;
         int right = mUnit * (position + 1) + 20;
