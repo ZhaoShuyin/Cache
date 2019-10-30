@@ -13,6 +13,12 @@ import com.example.myapplication.view.EcgView;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Android 1.0 开始支持 OpenGL ES 1.0 及 1.1
+ * Android 2.2 开始支持 OpenGL ES 2.0
+ * Android 4.3 开始支持 OpenGL ES 3.0
+ * Android 5.0 开始支持 OpenGL ES 3.1
+ */
 public class MainActivity extends AppCompatActivity {
 
     ConcurrentLinkedQueue<Short> queue = new ConcurrentLinkedQueue<>();
@@ -24,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         EcgView ecgView = findViewById(R.id.ecg_view);
         ecgView.setQueue(queue);
     }
-
 
 
 }

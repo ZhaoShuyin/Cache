@@ -14,7 +14,7 @@ import edu.wuwang.opengl.render.FGLRender;
 import edu.wuwang.opengl.render.Shape;
 
 /**
- * Description:
+ * Description:绘制形体
  */
 public class FGLView extends GLSurfaceView {
 

@@ -1,4 +1,4 @@
-include ':app', ':sdkdemo', ':bluetooth', ':btdemo', ':ecg', ':ECGChart', ':OpenGLDemo'
+include ':app', ':sdkdemo', ':bluetooth', ':btdemo', ':ecg', ':ECGChart', ':OpenGLDemo', ':fbodemo', ':FBOShape'
 include ':zGLSurface'
 //icnlude ':NguiApp', ':nguilib'
 include ':EcgWave', ':ECGMonitor'

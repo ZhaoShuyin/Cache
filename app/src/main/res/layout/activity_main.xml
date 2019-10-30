@@ -14,7 +14,7 @@
         android:layout_height="300dp"
         android:background="@drawable/ecgbg"/>
 
-    <com.example.myapplication.view.GLEcgView
+    <com.example.myapplication.view.GLSurView
         android:layout_width="300dp"
         android:layout_height="300dp"/>
 </LinearLayout>

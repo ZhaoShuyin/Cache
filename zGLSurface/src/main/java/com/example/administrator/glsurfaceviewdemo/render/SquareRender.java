@@ -15,7 +15,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * 正方形
  */
-public class SquareRender extends BaseRenderer implements GLSurfaceView.Renderer {
+public class SquareRender implements GLSurfaceView.Renderer {
 
     private FloatBuffer vertexBuffer;
     private ShortBuffer indexBuffer;
@@ -133,5 +133,14 @@ public class SquareRender extends BaseRenderer implements GLSurfaceView.Renderer
         GLES20.glDrawElements(GLES20.GL_TRIANGLES,index.length, GLES20.GL_UNSIGNED_SHORT,indexBuffer);
         //禁止顶点数组的句柄
         GLES20.glDisableVertexAttribArray(mPositionHandle);
+    }
+
+    public int loadShader(int type, String shaderCode){
+        //根据type创建顶点着色器或者片元着色器
+        int shader = GLES20.glCreateShader(type);
+        //将资源加入到着色器中，并编译
+        GLES20.glShaderSource(shader, shaderCode);
+        GLES20.glCompileShader(shader);
+        return shader;
     }
 }

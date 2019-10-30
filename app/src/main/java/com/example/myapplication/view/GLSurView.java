@@ -6,8 +6,10 @@ import android.opengl.GLU;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.example.myapplication.render.MultiRender;
 import com.example.myapplication.render.MyRender;
 import com.example.myapplication.render.OpenGLRender;
+import com.example.myapplication.render.SquareRender;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -44,25 +46,30 @@ import javax.microedition.khronos.opengles.GL10;
  * 10.opengl官网
  * https://www.khronos.org/opengl/wiki
  * 11.帧缓存对象 FBO
- *
+ *  https://blog.csdn.net/weixin_30772105/article/details/98417736
+ * 12.绘制方式
+ * https://blog.csdn.net/code09/article/details/41377847
+ * 13.多层绘制
+ * https://blog.csdn.net/u010462297/article/details/50589991
  */
-public class GLEcgView extends GLSurfaceView {
+public class GLSurView extends GLSurfaceView {
 
     private String TAG = "ZGLSurView";
 
-    public GLEcgView(Context context) {
+    public GLSurView(Context context) {
         super(context);
     }
 
-    public GLEcgView(Context context, AttributeSet attrs) {
+    public GLSurView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.e(TAG, "GLSView: 构造函数");
         //设置渲染器
 //        setRenderer(new OpenGLRender());
-        setRenderer(new MyRender());
+//        setRenderer(new MyRender());
+        setRenderer(new SquareRender());
         //设置非主动渲染(须在 setRenderer() 之后)
         //1.非主动渲染RENDERMODE_WHEN_DIRTY(0) 2.RENDERMODE_CONTINUOUSLY主动渲染(1)
-//        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
 

@@ -13,12 +13,14 @@
             <option value="$PROJECT_DIR$/EcgDemo" />
             <option value="$PROJECT_DIR$/EcgView" />
             <option value="$PROJECT_DIR$/EcgWave" />
+            <option value="$PROJECT_DIR$/FBOShape" />
             <option value="$PROJECT_DIR$/OpenGLDemo" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bluetooth" />
             <option value="$PROJECT_DIR$/btdemo" />
             <option value="$PROJECT_DIR$/ecg" />
             <option value="$PROJECT_DIR$/ecgMobile" />
+            <option value="$PROJECT_DIR$/fbodemo" />
             <option value="$PROJECT_DIR$/sdkdemo" />
             <option value="$PROJECT_DIR$/zGLSurface" />
           </set>

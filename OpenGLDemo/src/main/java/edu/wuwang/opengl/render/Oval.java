@@ -20,7 +20,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * Description:
+ * Description:圆形
  */
 public class Oval extends Shape {
 

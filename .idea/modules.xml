@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/EcgDemo/EcgDemo.iml" filepath="$PROJECT_DIR$/EcgDemo/EcgDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/EcgView/EcgView.iml" filepath="$PROJECT_DIR$/EcgView/EcgView.iml" />
       <module fileurl="file://$PROJECT_DIR$/EcgWave/EcgWave.iml" filepath="$PROJECT_DIR$/EcgWave/EcgWave.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FBOShape/FBOShape.iml" filepath="$PROJECT_DIR$/FBOShape/FBOShape.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/OpenGLDemo/OpenGLDemo.iml" filepath="$PROJECT_DIR$/OpenGLDemo/OpenGLDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
@@ -15,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/btdemo/btdemo.iml" filepath="$PROJECT_DIR$/btdemo/btdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/ecg/ecg.iml" filepath="$PROJECT_DIR$/ecg/ecg.iml" />
       <module fileurl="file://$PROJECT_DIR$/ecgMobile/ecgMobile.iml" filepath="$PROJECT_DIR$/ecgMobile/ecgMobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fbodemo/fbodemo.iml" filepath="$PROJECT_DIR$/fbodemo/fbodemo.iml" />
       <module fileurl="file://D:\Projects\MyApplication\zGLSurface\glSurface.iml" filepath="D:\Projects\MyApplication\zGLSurface\glSurface.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdkdemo/sdkdemo.iml" filepath="$PROJECT_DIR$/sdkdemo/sdkdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zGLSurface/zGLSurface.iml" filepath="$PROJECT_DIR$/zGLSurface/zGLSurface.iml" />
