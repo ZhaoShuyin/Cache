@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by wenh on 16/10/2617:04.
  */
 
-public class ECG_allData_View extends View {
+public class AllEcgView extends View {
 
     private int width,height;//本页面宽，高
     private ArrayList<String> data_source;
@@ -25,13 +25,13 @@ public class ECG_allData_View extends View {
     private float rect_gap_x;//下方矩形区域心电图数据间的横坐标间隙
     private float rectY_center;//下方矩形区域心电图的中心Y值
 
-    public ECG_allData_View(Context context, AttributeSet attrs){
+    public AllEcgView(Context context, AttributeSet attrs){
         super(context,attrs);
         //背景色 透明
         this.setBackgroundColor(getResources().getColor(R.color.trans));
     }
 
-    public ECG_allData_View(Context context){
+    public AllEcgView(Context context){
         super(context);
         //背景色 透明
         this.setBackgroundColor(getResources().getColor(R.color.trans));

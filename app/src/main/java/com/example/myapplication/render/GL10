@@ -1,0 +1,1491 @@
+公共接口GL10继承于GL
+
+GL10接口包含了Java（TM）程序语言为OpenGL绑定的核心功能。
+OES_byte_coordinates,OES_single_precision,OES_fixed_point,OES_read_format,
+以及OES_compressed_paletted_texture等扩展功能也是这个接口的一部分。
+一个以x或xv为后缀的方法是属于OES_fixed_point扩展功能的，
+并且需要一个或更多的修正的点为参数。这些修正的点可能是浮点点派生出来的值通过乘以65536后再取最接近整数得到。
+为了使用方便起见，这个接口记录了OpenGL ES各版本包括1.1及其扩展版本的方法。
+当运行一个OpenGL ES 1.0的应用程序时，被标为“（仅1.1）”可以被忽略。
+查看GL接口描述，了解如何获取该接口实例。
+
+方法的详细描述：
+
+<****>glActiveTexture<****>
+
+public void glActiveTexture(int texture)
+
+功能：
+
+选择服务端活动的纹理单元
+
+详细：glActiveTexture选择哪一个纹理在后面的纹理状态改变时有效，纹理单元的数量是依据该纹理单元所被支持的具体实现。在OpenGL ES 1.0中至少一个，在OpenGL ES 1.1中至少两个。
+
+注意：
+
+常常会这样GL_TEXTUREi = GL_TEXTURE0 + i
+
+一个纹理单元由纹理可用状态、纹理矩阵堆、纹理环境以及当前渲染纹理组成。修改其中任一成分均会改变当前活动纹理单元。
+
+点阵是客户端GL资源，它通过glClientActiveTexture程序获取。
+
+错误：
+
+当0<= i < GL_MAX_TEXTURE_UNITS 时，如果纹理不是一个GL_TEXTUREi，GL_INVALID_ENUM（错误枚举）会产生。
+
+相关获取：
+
+利用glGetIntegerv处理GL_MAX_TEXTURE_UNITS。
+
+参数：
+
+texture——指定哪一个纹理单元为活动。必须是一个GL_TEXTUREi，其中0 <= i < GL_MAX_TEXTURE_UNITS，初始值为GL_TEXTURE0。
+
+glAlphaFunc
+
+public void glAlphaFunc(int func,float ref)
+
+功能：
+
+指定Alpha测试功能。
+
+详细：
+
+Alpha测试依据结果舍弃片段，该结果由引入片段的alpha值与参照值常量进行比较得到。glAlphaFunc指定参照值与比较方法。只有当alpha测试有效时，比较才有用。使alpha测试有效或无效可以利用glEnable和glDisable方法，它们都是以GL_ALPHA_TEST为参数的，alpha测试初始为无效。
+
+func与ref指明像素被绘出的条件。引入的alpha值通过func指明的方法与ref指明的参照值进行比较。如果该值通过比较并且通过随后的模型测试与深度缓冲区测试，则将引入的片段绘出。如果该值未通过比较，则该像素区的帧缓冲区不会发生任何变化。比较方法如下：
+
+GL_NEVER：不会通过。
+
+GL_LESS：如果引入的alpha值比参照值小则通过。
+
+GL_EQUAL：如果引入的alpha值与参照值相等则通过。
+
+GL_LEQUAL：如果引入的alpha值小于或等于参照值则通过。
+
+GL_GREATER：如果引入的alpha值比参照值大则通过。
+
+GL_NOTEQUAL：如果引入的alpha值与参照值不相等则通过。
+
+GL_GEQUAL：如果引入的alpha值大于或等于参照值则通过。
+
+GL_ALWAYS：总是通过。（初始设定）
+
+对所有的像素写入操作进行glAlphaFunc操作，包括那些从点、线、多边形的扫描转换得到的结果。glAlphaFunc对glClear无影响。
+
+错误：
+
+当func不是被允许的值会产生GL_INVALID_ENUM（错误枚举）。
+
+参数：
+
+func——指明alpha比较方法，被允许的符合常量有GL_NEVER, GL_LESS,GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, 和 GL_ALWAYS。初始值为GL_ALWAYS。
+
+ref——指明与引入的alpha值比较的参照值，这个值的属于区间[0, 1]，初始值为0。
+
+glAlphaFuncx
+
+public void glAlphaFuncx(int func,int ref)
+
+功能：glAlphaFunc的修正版本，仅仅参数类型由float ref变为int ref。
+
+glBindTexture
+
+public void glBindTexture(int target,int texture)
+
+功能：
+
+将一个已命名的纹理与一个纹理目标绑定。
+
+详细：glBindTexture可以让你创建或使用一个已命名的纹理，调用glBindTexture方法并将target设置为GL_TEXTURE_2D，将texture设置为你想要绑定的新纹理的名称。当一个纹理与目标绑定时，该目标之前的绑定关系将自动被释放。
+
+纹理的名称是一个无符号的整数。在每个纹理目标中，0被保留用以代表默认纹理。纹理名称与相应的纹理内容被保留在当前GL rendering上下文的共享的纹理对象空间中（参照eglCreateContext）
+
+你可以使用glGenTextures来设置一个新的纹理名称。
+
+当一个纹理被绑定时，对于其目标的GL操作将作用于该绑定的纹理之上。如果被绑定的纹理的目标的维度的纹理映射是活动的，则绑定的纹理被使用。实际上，纹理目标成为当前被绑定纹理的别名，并且纹理名称0指的是在初始化时被绑定的默认纹理。
+
+通过glBindTexture绑定的纹理仍旧是活动的直到同一个目标被其他纹理绑定或者该绑定纹理通过glDeleteTextures删除为止。
+
+一旦创建，一个已命名的纹理可能经常需要与维度匹配的目标多次绑定。这样利用glBindTexture来将一个已命名的纹理与一个纹理目标绑定，比利用glTexImage2D进行纹理图像的重载要快的多。
+
+错误：
+
+当目标不是一个被允许的值时，会产生GL_INVALID_ENUM（错误枚举）。
+
+参数：
+
+target——指明纹理要绑定的目标，必须是GL_TEXTURE_2D。
+
+texture——指明纹理的名称。
+
+glBlendFunc
+
+public void glBlendFunc(int sfactor,int dfactor)
+
+功能：
+
+指明像素算法。
+
+详细：
+
+像素可以通过函数操作后被绘出，该函数的功能是将引入的值与颜色缓冲中已有的值混合。使用glEnable方法与glDisable方法以GL_BLEND为参数，决定是否开启混合功能，该功能初始为关闭的。
+
+当混合功能开启时glBlendFunc定义混合功能的操作。sfactor指明十一中方法中的哪一种用来衡量源颜色要素，dfactor指明十种方法中的哪一种用来衡量目的颜色要素。十一种可能的方法将在下面进行介绍。每一种方法定义了四个衡量元素，分别是红、绿、蓝和alpha。
+
+在后面的内容中，源与目的颜色要素被指为(Rs, Gs, Bs, As)和(Rd, Gd, Bd, Ad)，它们的值为0至(kR, kG, kB, kA)之间的整数，其中kc = 2mc – 1，并且(mR, mG, mB, mA)是红、绿、蓝和alpha位平面的数量。
+
+源和目标比例系数由(sR, sG, sB, sA)和(dR, dG, dB, dA)指定。比例系数用(fR, fG, fB, fA)表示，代表既不是源也不是目标因素，所有比例系数属于区间[0, 1]。
+
+参数                    (fR, fG, fB, fA)
+
+GL_ZERO                (0, 0, 0, 0)
+
+GL_ONE                 (1, 1, 1, 1)
+
+GL_SRC_COLOR           (Rs/kR, Gs/kG, Bs/kB, As/kA )
+
+GL_ONE_MINUS_SRC_COLOR (1, 1, 1, 1) - (Rs/kR, Gs/kG, Bs/kB, As/kA)
+
+GL_DST_COLOR           (Rd/kR, Gd/kG, Bd/kB, Ad/kA )
+
+GL_ONE_MINUS_DST_COLOR (1, 1, 1, 1) - (Rd/kR, Gd/kG, Bd/kB, Ad/kA) GL_SRC_ALPHA            (As/kA, As/kA, As/kA, As/kA )GL_ONE_MINUS_SRC_ALPHA  (1, 1, 1, 1) -(As/kA, As/kA, As/kA, As/kA) GL_DST_ALPHA            (Ad/kA, Ad/kA, Ad/kA, Ad/kA )GL_ONE_MINUS_DST_ALPHA  (1, 1, 1, 1) -(Ad/kA, Ad/kA, Ad/kA, Ad/kA) GL_SRC_ALPHA_SATURATE   (i, i, i, 1)
+
+i = min(As, kA - Ad) / kA
+
+为了确定像素的混合值，系统利用下列等式。
+
+Rd = min( kR, Rs sR + Rd dR )
+
+Gd = min( kG, Gs sG + Gd dG )
+
+Bd = min( kB, Bs sB + Bd dB )
+
+Ad = min( kA, As sA + Ad dA )
+
+尽管从表面上看混合算法并没有指明上述等式的精度，因为混合操作是采用不精确的整型颜色值。然而应当等于1的混合因素要被确保没有修改它的被乘数，并且一个等于0的混合因素要降低它的被乘数至0。举一个例子，当sfactor是GL_SRC_ALPHA，dfactor 是GL_ONE_MINUS_SRC_ALPHA并且As等于kA时，等式进行简单替换。
+
+Rd = Rs
+
+Gd = Gs
+
+Bd = Bs
+
+Ad = As
+
+对于所有像素元素的写入操作进行glBlendFunc操作时，包括对于点、线、多边形的扫描转换，都不影响glClear方法。
+
+举例：
+
+为了渲染物体从远到近排列的效果，最好应用glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA)处理透明度。请注意这个透明度计算不要求存在颜色缓冲区中的alpha位面数。
+
+glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)对于渲染抗锯齿的点和线也很有效。
+
+注意：
+
+引入的（源）alpha被认为是不透明的，范围是1.0 (kA)，表明完全不透明，而0表明完全透明。
+
+错误：
+
+当sfactor或dfactor为不允许的值时，产生GL_INVALID_ENUM（错误枚举）。
+
+参数：
+
+sfactor——指明源图元的红、绿、蓝、alpha的混合比例是怎样计算的。允许的符号符号常量有：GL_ZERO, GL_ONE,GL_SRC_COLOR (仅1.1), GL_ONE_MINUS_SRC_COLOR (仅1.1), GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, 和 GL_SRC_ALPHA_SATURATE，初始值是GL_ONE。
+
+dfactor——指明目图元的红、绿、蓝、alpha的混合比例是怎样计算的。允许的符号符号常量有：GL_ZERO, GL_ONE,GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR (仅1.1),GL_ONE_MINUS_DST_COLOR (仅1.1), GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, 和 GL_ONE_MINUS_DST_ALPHA，初始值为GL_ZERO
+
+网络解释：
+
+第一个参数指出源图元的alpha的取值计算方法，第二个参数指出目标处的alpha的计算方法。
+两个参数的取值都可以是如下常量之一：
+GL_ZERO, GL_ONE, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, and GL_SRC_ALPHA_SATURATE
+比如GL_ZERO表示alpha取值为0，GL_ONE表示1，GL_DST_COLOR表示取目标区域的颜色值，GL_SRC_ALPHA表示取源区域的alpha值等等。例如：
+glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+表示把渲染的图像叠加到目标区域，也就是说源的每一个像素的alpha都等于自己的alpha，目标的每一个像素的alpha等于1。这样叠加次数越多，叠加的图元的alpha越高，得到的结果就越亮。因此这种融合用于表达光亮效果。
+glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+表示把渲染的图像融合到目标区域。也就是说源的每一个像素的alpha都等于自己的alpha，目标的每一个像素的alpha等于1减去该位置源像素的alpha。 因此不论叠加多少次，亮度是不变的。
+glClear
+
+public void glClear(int mask)
+
+功能：
+
+清理缓冲区，并设置为预设值。
+
+详细：
+
+glClear设置窗口位面区的值，该值由glClearColor, glClearDepth 和 glClearStencil等方法选择出。
+
+像素所有权测试、裁剪测试、抖动、颜色缓冲区掩饰将影响glClear操作，裁剪盒绑定清理区域。Alpha功能、混合功能、逻辑操作、建模、纹理映射以及深度缓冲区会被glClear操作忽略。
+
+glClear可以使参数为多个值按位与后的结果，以表明那个缓冲区需要清理。
+
+有如下值：
+
+GL_COLOR_BUFFER_BIT：表明颜色缓冲区。
+
+GL_DEPTH_BUFFER_BIT：表明深度缓冲区。
+
+GL_STENCIL_BUFFER_BIT：表明模型缓冲区。
+
+注意：
+
+如果缓冲区并没有呈现出来，则glClear对指向的缓冲区无效果。
+
+错误：
+
+如果使用任一非已定义的值将产生GL_INVALID_VALUE（错误枚举）。
+
+参数：
+
+mask——允许的值有GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT。
+
+网络解释：
+
+glClear（）语句的作用是用当前缓冲区清除值，也就是glClearColor或者glClearDepth等函数所指定的值来清除指定的缓冲区。比如：
+
+glClearColor（0.0，0.0，0.0，0.0）;
+
+glClear（GL_COLOR_BUFFER_BIT）;
+
+第一条语句表示清除颜色设为黑色，第二条语句表示把整个窗口清除为当　前的清除颜色，glClear（）的唯一参数表示需要被清除的缓冲区。
+
+glClearColor
+
+public void glClearColor(float red,float green,float blue,float alpha)
+
+功能：指定颜色缓冲区的清理值
+
+详细：glClearColor指明红、绿、蓝、alpha的值并通过glClear来清理颜色缓冲区，被glClearColor指明的值属于区间[0, 1]。
+
+参数：
+
+red——指明颜色缓冲区被清理时红色的值，初始值为0。
+
+green——指明颜色缓冲区被清理时绿色的值，初始值为0。
+
+blue——指明颜色缓冲区被清理时蓝色的值，初始值为0。
+
+alpha——指明颜色缓冲区被清理时alpha的值，初始值为0。
+
+glClearColorx
+
+public void glClearColorx(int red,int green,int blue,int alpha)
+
+功能：glClearColor的修正方法。
+
+glClearDepthf
+
+public void glClearDepthf(float depth)
+
+功能：指明深度缓冲区的清理值。
+
+详细：glClearDepth方法指明深度值，并通过glClear来清理深度缓冲区。glClearDepth指明的值属于区间[0, 1]。
+
+参数：
+
+depth——指明深度缓冲区被清理时的深度值，初始值为1。
+
+glClearDepthx
+
+public void glClearDepthx(int depth)
+
+功能：glClearDepth的修正方法。
+
+glClearStencil
+
+public void glClearStencil(int s)
+
+功能：指明模板缓冲区的清理值。
+
+详细：glClearStencil指明glClear清理模板缓冲区时的索引，s为2m-1，其中m是模板缓冲区中的bit数。
+
+相关获取：
+
+glGetIntegerv方法，并以GL_STENCIL_BITS为参数。
+
+参数：
+
+s——指明glClear清理模板缓冲区时的索引，初始值为0。
+
+glClientActiveTexture
+
+public void glClientActiveTexture(int texture)
+
+功能：选择客户端活动纹理单元。
+
+glClientActiveTexture选择顶点矩阵，客户状态参数由glTexCoordPointer方法修改。可用性由glEnableClientState与glDisableClientState决定，参数为GL_TEXTURE_COORD_ARRAY。
+
+注意：
+
+总有GL_TEXTUREi = GL_TEXTURE0 + i。
+
+错误：
+
+如果texture不是一个GL_TEXTUREi，这里0 <= i < GL_MAX_TEXTURE_UNITS，则产生一个GL_INVALID_ENUM（错误矩阵）。
+
+相关获取：
+
+glGetIntegerv方法，并以GL_MAX_TEXTURE_UNITS为参数。
+
+参数：
+
+texture——指定哪一个纹理单元为活动。纹理个数至少一个（对于1.0）或两个（对于1.1）纹理必须是一个GL_TEXTUREi，其中0 <=i < GL_MAX_TEXTURE_UNITS，初始值为GL_TEXTURE0。
+
+glColor4f
+
+public void glColor4f(float red,float green,float blue,float alpha)
+
+功能：设置当前颜色。
+
+详细：GL储存当前四值的RGBA颜色，glColor可以设置新的四值的RGBA颜色。
+
+当前颜色值被储存为整型或浮点型，如果值被储存为浮点型，尾数和指数的大小未指明。
+
+在当前颜色更新之前整型与浮点型都不属于区间[0, 1]，然而颜色元素在修改或写入颜色缓冲区前会属于该区间。
+
+参数：
+
+red——为当前颜色指明一个新的红色值，初始值为1。
+
+green——为当前颜色指明一个新的绿色值，初始值为1。
+
+blue——为当前颜色指明一个新的蓝色值，初始值为1。
+
+alpha——为当前颜色指明一个新的alpha值，初始值为1。
+
+glColor4x
+
+public void glColor4x(int red,int green,int blue,int alpha)
+
+功能：glColor4f的修正方法。
+
+glColorMask
+
+public void glColorMask(boolean red,boolean green,boolean blue,boolean alpha)
+
+功能：开启与禁止颜色元素的写入操作。
+
+详细：glColorMask指明单独的颜色元素是否可以被写入。举一个例子，如果red为false，则颜色缓冲区中的任何像素的颜色的红色元素将不会发生变化，忽略企图的绘画操作，包括glClear。
+
+不可以控制元素单个位的改变，只能控制整个元素是否可以改变。
+
+参数：
+
+red——指明红色元素是否可以写入颜色缓冲区，初始值为ture，表明可以写入。
+
+green——指明绿色元素是否可以写入颜色缓冲区，初始值为ture，表明可以写入。
+
+blue——指明蓝色元素是否可以写入颜色缓冲区，初始值为ture，表明可以写入。
+
+alpha——指明alpha元素是否可以写入颜色缓冲区，初始值为ture，表明可以写入。
+
+glColorPointer
+
+public void glColorPointer(int size,int type,int stride,Buffer pointer)
+
+功能：
+
+定义一个颜色矩阵。
+
+详细：
+
+glColorPointer指明渲染时使用的颜色矩阵。size指明每个颜色的元素数量，必须为4。type指明每个颜色元素的数据类型，stride指明从一个颜色到下一个允许的顶点的字节增幅，并且属性值被挤入简单矩阵或存储在单独的矩阵中（简单矩阵存储可能在一些版本中更有效率）。
+
+当一个颜色矩阵被指定，size, type, stride和pointer将被保存在客户端状态。
+
+如果颜色矩阵被启用，当使用glDrawArrays方法或glDrawElements方法时被调用。利用glEnableClientState方法与glDisableClientState方法以GL_COLOR_ARRAY为参数来启用和禁止颜色矩阵，颜色矩阵初始值为禁用，不允许glDrawArrays方法和glDrawElements方法调用。
+
+使用glDrawArrays方法依据事先指明的顶点和顶点矩阵构建一系列图元（都是同种类型的），使用glDrawElements方法依据顶点索引和顶点属性构建一系列图元。
+
+注意：
+
+glColorPointer在客户端应用。
+
+错误：
+
+size 不是4时将产生GL_INVALID_VALUE。
+
+type不是一个允许的值时将产生GL_INVALID_ENUM。
+
+stride为负数时将产生GL_INVALID_VALUE。
+
+pointer参数必须是直接缓存并且类型与type指定的类型相同。
+
+参数：
+
+size——指明每个颜色的元素数量，必须为4。
+
+type——指明每个矩阵中颜色元素的数据类型，允许的符号常量有GL_UNSIGNED_BYTE, GL_FIXED和GL_FLOAT，初始值为GL_FLOAT。
+
+stride——指明连续的点之间的位偏移，如果stride为0时，颜色被紧密挤入矩阵，初始值为0。
+
+pointer——指明包含颜色的缓冲区，如果pointer为null，则为设置缓冲区。
+
+抛出：
+
+java.lang.IllegalStateException——如果是OpenGL ES 1.1并且VBOs（Vertex Buffer Object即顶点缓冲对象）启用。
+
+java.lang.IllegalArgumentException——如果pointer不是直接缓存。
+
+网络解释：
+
+顶点数组的概念如此的简单，如其名，就是将原来由一系列的glVertex*指定的顶点放在一个数组中，（其意思就是顶点数据组成的数组）由顶点数组处理 函数一次性指定。事实上，不仅如此，其一次性指定的不仅仅是数组，还可以是其他系列的东西，比如表面发现,RGBA颜色，辅助颜色等。
+
+glCompressedTexImage2D
+
+public void glCompressedTexImage2D(int target,
+
+                                  int level,
+
+                                  int internalformat,
+
+                                  int width,
+
+                                  int height,
+
+                                  int border,
+
+                                   int imageSize,
+
+                                  Buffer data)
+
+功能：
+
+指明一个二维的压缩的纹理图像。
+
+详细：
+
+glCompressedTexImage2D定义一个压缩格式的二维纹理图像。
+
+调色板纹理是被支持的压缩格式，一个压缩图像的布局是一个调色板，调色板由用以查找调色板的多层级数的纹理引用决定。调色板的格式可以为R5_G6_B5, RGBA4, RGB5_A1, RGB8, 或者RGBA8，纹理引用的分辨率可以为4位或8位。结果，调色板条目不是16就是256。如果level是0，数据中仅有一个纹理引用的层级数会被描述。否则，level为负值指明描述纹理直到哪一个层级数。可能会有剩余为最低分辨率填补的半个字节会被忽略。
+
+注意：
+
+glPixelStore对于压缩纹理图像无影响。
+
+glCompressedTexImage2D指明当前绑定纹理的二维纹理以及当前纹理单元，分别通过glBindTexture方法和glActiveTexture方法。
+
+错误：
+
+如果target不是GL_TEXTURE_2D，将会产生GL_INVALID_ENUM（错误枚举）。
+
+如果level大于0或者绝对值大于log_2(max)，这里的max是GL_MAX_TEXTURE_SIZE的返回值。则产生GL_INVALID_VALUE。
+
+(1.0)internalformat不是允许的符号常量，将产生GL_INVALID_VALUE（错误值）。
+
+(1.1)internalformat不是允许的符号常量，将产生GL_INVALID_ENUM（错误枚举）。
+
+如果width或者height小于0或大于2 + GL_MAX_TEXTURE_SIZE，或者其中一个不能表示为2^k+ 2*border，k为整数，将产生GL_INVALID_VALUE（错误值）。
+
+如果border不是0则产生GL_INVALID_VALUE（错误值）。
+
+如果图像不符合格式、尺寸及压缩图像的内容，则产生GL_INVALID_VALUE（错误值）。
+
+参数：
+
+target——指明目标纹理，必须为GL_TEXTURE_2D。
+
+level——指明具体数值的等级数，必须小于等于0，0表明只有一种层级数，负数表明有多少被数据描述的层级数。
+
+internalformat——指明纹理中的颜色元素，被允许的符号常量有：GL_PALETTE4_RGB8_OES,GL_PALETTE4_RGBA8_OES, GL_PALETTE4_R5_G6_B5_OES, GL_PALETTE4_RGBA4_OES,GL_PALETTE4_RGB5_A1_OES, GL_PALETTE8_RGB8_OES, GL_PALETTE8_RGBA8_OES,GL_PALETTE8_R5_G6_B5_OES, GL_PALETTE8_RGBA4_OES, and GL_PALETTE8_RGB5_A1_OES.
+
+width——指明纹理图像的宽度，必须是2^k + 2*border，k为整数，所有版本支持的纹理图像至少时64像素宽。
+
+height——指明纹理图像的高度，必须是2^k + 2*border，k为整数，所有版本支持的纹理图像至少时64像素高。
+
+border——指明边界宽度，必须为0。
+
+imageSize——指明压缩纹理图像的大小，单位为byte。
+
+data——指明一个包含压缩纹理图像数据的缓冲区。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果data为空。
+
+java.lang.IllegalArgumentException——如果data.remaining()小于imageSize。
+
+网络解释：
+
+功能: 使用压缩过的纹理图像定义一个二维纹理.
+level: 提供多种分辨率的纹理. 如纹理只有一种分辨率,level则设置为0.
+internalformat: 纹理图像的压缩格式, 必须是当前OpenGL实现支持的压缩格式, 否则导致GL_INVALID_ENUM错误.
+width, height, depth: 指定二维纹理图像的大小. 参数值的必须为 2的m次方 + 2b.
+border: b的值, 必须是0
+
+mipmap: 多个明细等级（即上面的层级数）
+
+mipmap:一系列预先通过滤波生成的, 分辨率递减的纹理图.
+功能: 使用mipmap技术时, OpenGL根据物体的大小(以像素为单位)自动确定应使用哪个纹理图像.
+方法: 必须提供从最大尺寸到1 x 1的, 大小为2的幂的各种纹理图.例如最大分辨率为64 X 16, 就必须提供32X8, 16X4, 8X2, 4X1, 2X1, 1X1的纹理
+原理: 小的纹理图通常是通过对最大的纹理图进行滤波处理得到的,每个纹素的值是前一个纹理图中4个相应纹素的平均值.
+使用: 用函数glTexImage2D()指定使用哪些纹理. 将参数level, width, height和image设置成不同的值.
+level的示例: 例如最大分辨率为64 X 16,level为0表示64X16,level为1表示32X8, 以此类推（有些问题）
+
+glCompressedTexSubImage2D
+
+public void glCompressedTexSubImage2D(int target,
+
+                                     int level,
+
+                                     int xoffset,
+
+                                     int yoffset,
+
+                                     int width,
+
+                                     int height,
+
+                                     int format,
+
+                                     int imageSize,
+
+                                     Buffer data)
+
+功能：
+
+指明二维压缩纹理子图。
+
+详细：
+
+glCompressedTexSubImage2D在已存在的二维压缩图像的子区域重新定义纹理子图。子图将替换已存在纹理图像的子区域。范围是x方向从xoffset到xoffset+ width – 1，y方向从yoffset到yoffset + height – 1。宽、高都为0不是错误，但没有意义。
+
+现在没有支持该方法的压缩格式。
+
+注意：
+
+glPixelStore对于压缩纹理图像无效果。
+
+glCompressedTexImage2D指明当前绑定纹理的二维纹理以及当前纹理单元，分别通过glBindTexture方法和glActiveTexture方法。
+
+错误：
+
+如果target不是GL_TEXTURE_2D，将会产生GL_INVALID_ENUM（错误枚举）。
+
+如果纹理矩阵没有被之前的glCompressedTexImage2D操作定义则产生GL_INVALID_OPERATION。
+
+如果level小于0或者绝对值大于log_2(max)，这里的max是GL_MAX_TEXTURE_SIZE的返回值。则产生GL_INVALID_VALUE。
+
+如果xoffset < -b, xoffset + width > (w - b), yoffset< -b, or yoffset + height > (h -b)，这里w纹理的宽度，h是纹理的高度，b是被修改的纹理图像的边界，则产生GL_INVALID_VALUE。注意w和h包含2倍的边界宽。
+
+如果宽、高小于0则产生GL_INVALID_VALUE。
+
+如果type不是类型常量则产生GL_INVALID_ENUM。
+
+如果type是GL_UNSIGNED_SHORT_5_6_5并且format不是GL_RGB则产生GL_INVALID_OPERATION。
+
+如果type是GL_UNSIGNED_SHORT_4_4_4_4或GL_UNSIGNED_SHORT_5_5_5_1并且format不是GL_RGB则产生GL_INVALID_OPERATION。
+
+如果不是上述的情形则产生GL_INVALID_OPERATION。
+
+相关获取：
+
+利用glGetIntegerv方法，参数为GL_MAX_TEXTURE_SIZE。
+
+参数：
+
+target——指明目标纹理，必须是GL_TEXTURE_2D。
+
+level——指明层级数。
+
+xoffset——指明在纹理矩阵中在X方向上的偏移量。
+
+yoffset——指明在纹理矩阵中在Y方向上的偏移量。
+
+width——指明纹理子图的宽。
+
+height——指明纹理子图的高。
+
+format——指明像素数据的格式，现在没有支持的格式。
+
+imageSize——指明压缩图像的大小，以byte为单位。
+
+data——指明包含压缩纹理图像的缓冲区。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果data为空。
+
+java.lang.IllegalArgumentException——如果data.remaining()小于imageSize。
+
+网络解释：
+
+功能: 用一个二维纹理图像替换当前二维纹理图像中的一个(矩形)区域.
+target:取值与函数glCopyTexImage2D()中相同.
+level, format, type: level是mipmap明细等级. format和type描述了纹理图像数据的格式和数据类型.
+子图像受函数glPixelStore*()和glPixelTransfer*()设置的模式以及其他像素转移操作的影响.
+xoffset, yoffset: 要替换的子区域左下角相对于当前纹理左下角的位置.
+width, height: 要替换的子区域的宽度和高度.
+texels: 子图像的纹理数据.
+
+glCopyTexImage2D
+
+public void glCopyTexImage2D(int target,
+
+                             int level,
+
+                            int internalformat,
+
+                             int x,
+
+                             int y,
+
+                             int width,
+
+                             int height,
+
+                             int border)
+
+功能：
+
+指明一个像素从颜色缓冲区获得的二维纹理图像。
+
+详细：
+
+glCopyTexImage2D定义一个像素从颜色缓冲区获得的二维纹理图像。
+
+获取纹理数据的矩形，x、y代表矩形的左下角，宽为width+ 2*border，高为height of height + 2*border，分辨率为level指明的分辨率，internalformat指明纹理的颜色元素。
+
+每一个被读取的像素的红、绿、蓝、alpha元素被转换为未指明精度的内部整型或浮点型格式。转换机构将元素最大值映射为1.0，元素值为0时映射为0.0。然后值再被转换为纹理内部格式并储存在像素矩阵中。
+
+必须事先确定内部格式以使颜色缓冲区元素在转换时进行处理。但新的颜色元素不能添加。举一个例子，一个RGB颜色缓冲区可以被用来创建一个LUMINANCE或RGB纹理，不能是ALPHA、LUMINANCE_ALPHA或者RGBA纹理。
+
+像素排列时，下面的x、y坐标与纹理的下面的s、t坐标相对应。
+
+如果指明的颜色缓冲区矩形位于当前渲染的窗口的外面，则那些获取的值是未定义的。
+
+注意：
+
+一个宽、高均为0的图像表示无纹理。
+
+错误：
+
+如果target不是GL_TEXTURE_2D，将会产生GL_INVALID_ENUM（错误枚举）。
+
+如果internalformat不与颜色缓冲区格式相匹配，将会产生GL_INVALID_OPERATION。
+
+如果level小于0或者绝对值大于log_2(max)，这里的max是GL_MAX_TEXTURE_SIZE的返回值。则产生GL_INVALID_VALUE。
+
+如果宽、高小于0或大于GL_MAX_TEXTURE_SIZE或不满足2^k + 2*border，k为整数，将产生GL_INVALID_VALUE。
+
+如果border不是0，将产生GL_INVALID_VALUE
+
+(1.0)internalformat不是允许的符号常量，将产生GL_INVALID_VALUE（错误值）。
+
+(1.1)internalformat不是允许的符号常量，将产生GL_INVALID_ENUM（错误枚举）。
+
+相关获取：
+
+glGetIntegerv方法，参数为GL_MAX_TEXTURE_SIZE。
+
+参数：
+
+target——指明目标纹理，必须为GL_TEXTURE_2D。
+
+level——指明详细层数，level 0是基本图像level，level n是第n层级数压缩图像。
+
+internalformat——指明图像的颜色元素，允许的符号常量有GL_ALPHA,GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB以及GL_RGBA。
+
+x——复制矩形的左下角x坐标。
+
+y——复制矩形的左下角y坐标。
+
+width——指明纹理图像宽度，必须是0 或者 2^n + 2*border，n为整数。
+
+height——指明纹理图像高度，必须是0 或者 2^n + 2*border，n为整数。
+
+border——指明边界宽度。必须为0。
+
+网络解释：
+
+功能：复制帧缓存为纹理数据
+target: 必须为常量GL_TEXTURE_2D
+level, internalFormat, border: 同函数glTexImage2D()
+x,y: 屏幕坐标的左下点
+width, height: 矩形的宽和高.
+
+glCopyTexSubImage2D
+
+public void glCopyTexSubImage2D(int target,
+
+                                int level,
+
+                                int xoffset,
+
+                               int yoffset,
+
+                                int x,
+
+                                int y,
+
+                                int width,
+
+                               int height)
+
+功能：指明一个像素从颜色缓冲区获得的二维纹理图像子图。
+
+详细：glCopyTexSubImage2D
+
+glCullFace
+
+public void glCullFace(int mode)
+
+功能：
+
+指明多边形的前面或后面是否被拣选。
+
+详细：
+
+glCullFace指明多边形的前面或后面是否被拣选（当mode被指明时）当拣选功能开启。开启或禁止拣选功能，调用glEnable方法和glDisable方法并以GL_CULL_FACE为参数。拣选功能初始值为禁止。
+
+glFrontFace指明顺时针和逆时针绘出多边形，哪一个是前面，哪一个是背面。
+
+注意：
+
+如果mode是GL_FRONT_AND_BACK，多边形不会被绘出，但是其他图元像点、线会被绘出。
+
+错误：
+
+如果mode不是被允许的值，将会产生GL_INVALID_ENUM。
+
+参数：
+
+mode——指明多边形的前面或后面是否被拣选。允许的符号常量有：GL_FRONT,GL_BACK和GL_FRONT_AND_BACK。初始值为GL_BACK。
+
+glDrawArrays
+
+public void glDrawArrays(int mode,int first,int count)
+
+功能：
+
+由矩阵数据渲染图元。
+
+详细：
+
+glDrawArrays通过很少的子程序调用指明多层几何图元。你可以设置独立的顶点、法线、颜色矩阵，以及纹理坐标，并仅需调用glDrawArrays就可以通过它们构建一系列图元。
+
+当glDrawArrays被调用，它从被允许访问的矩阵中计算连续count个元素来构建一系列几何图元，从first元素开始。mode指明哪一种图元将被构建及矩阵元素怎样构建这些图元。如果GL_VERTEX_ARRAY没有启用，则不会有图元产生。
+
+当glDrawArrays返回后，由glDrawArrays改变的顶点属性会得到一个未指明的值。举个例子，如果GL_COLOR_ARRAY被启用，则glDrawArrays执行后当前颜色的值是未定义的。未改变的属性仍然是已定义的。
+
+错误：
+
+如果mode不是被允许的值，将会产生GL_INVALID_ENUM。
+
+如果count是负数，将会产生GL_INVALID_VALUE。
+
+参数：
+
+mode——指明渲染哪一种图元。允许的符号常量有GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP,GL_TRIANGLE_FAN和GL_TRIANGLES。
+
+first——指明在允许访问的矩阵中的起始索引。
+
+count——指明要渲染的索引的数量。
+
+抛出：
+
+java.lang.ArrayIndexOutOfBoundsException——如果序列中任一索引first至first + count – 1，导致引用出界。这个序列包括当前顶点、颜色、法线、纹理坐标，点大小，矩阵索引，或加权矩阵。
+
+glDrawElements
+
+public void glDrawElements(int mode,int count,int type,Buffer indices)
+
+功能：
+
+由矩阵数据渲染图元。
+
+详细：
+
+glDrawElements用少量调用指明多重几何图元，你可以事先指明独立的顶点、法线、颜色和纹理坐标矩阵并且可以通过调用glDrawElements方法来使用它们创建序列图元。
+
+当glDrawElements被调用，它会使用有序索引来查询可用矩阵中的元素，并以此创建序列几何图元，如果GL_VERTEX_ARRAY被禁用，则不会创建。
+
+顶点属性由glDrawElements修改，glDrawElements在返回后会有一个未指明的值。举一个例子，如果GL_COLOR_ARRAY启用，当执行glDrawElements方法后，当前颜色的值是未定义的，属性不会维持它之前的值。
+
+错误：
+
+如果mode的值不被允许，将产生GL_INVALID_ENUM。
+
+如果type的值不被允许，将产生GL_INVALID_ENUM。
+
+如果count是负数，将产生GL_INVALID_VALUE。
+
+参数：
+
+mode——指明被渲染的是哪种图元，被允许的符号常量有GL_POINTS,GL_LINE_STRIP,GL_LINE_LOOP,GL_LINES,GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN和GL_TRIANGLES
+
+count——指明被渲染的元素个数。
+
+type——指明索引指的类型，不是GL_UNSIGNED_BYTE就是GL_UNSIGNED_SHORT。
+
+indices——指明存储索引的位置指针。
+
+抛出：
+
+java.lang.IllegalStateException——如果最近一次调用glBindBuffer方法以GL_ELEMENT_ARRAY_BUFFER为目标时，有一个非0缓冲区参数。
+
+java.lang.IllegalArgumentException——如果索引为空。
+
+java.lang.ArrayIndexOutOfBoundsException——如果索引序列中从0到count-1中任意索引超出现有索引或数据矩阵范围。
+
+glEnable
+
+public void glEnable(int cap)
+
+功能：
+
+启用服务器端GL功能。
+
+详细：
+
+glEnable方法和glDisable方法可以启用和禁止各种功能，各种功能（除了GL_DITHER和GL_MULTISAMPLE）的初始值为GL_FALSE。
+
+glEnable方法和glDisable方法都只有一个参数，它可以采用下列值中的一个：GL_ALPHA_TEST——如果启用，将进行alpha测试，详见glAlphaFunc。
+
+GL_BLEND——如果启用，将引入的值与颜色缓冲区中的值混合，详见glBlendFunc。
+
+GL_COLOR_LOGIC_OP——如果启用，允许（apply）引入的颜色与颜色缓冲区中的值进行逻辑运算。详见glLogicOp。
+
+GL_COLOR_MATERIAL——如果启用，得到当前颜色的周围散开的痕迹。
+
+GL_CULL_FACE——如果启用，基于窗口坐标采集多边形。详见glCullFace。
+
+GL_DEPTH_TEST——如果启用，做深度比较和更新深度缓存。值得注意的是即使深度缓冲区存在并且深度mask不是0，如果深度测试禁用的话，深度缓冲区也无法更新。详见glDepthFunc, glDepthMask和glDepthRange。
+
+GL_DITHER——如果启用颜色元素或索引将在被写入颜色缓冲区之前进行dither。
+
+GL_FOG——如果启用，将雾的颜色效果与显示纹理颜色混合。详见glFog。
+
+GL_LIGHTi——如果启用，包含光线i在光线方程的评价中，详见glLightModel和glLight。
+
+GL_LIGHTING——如果启用，用当前光线参数计算顶点颜色。否则仅仅简单将当前颜色与每个顶点关联。详见glMaterial, glLightModel和glLight。
+
+GL_LINE_SMOOTH——如果启用，画线时使用调整过滤。否则，画aliased线，详见glLineWidth。
+
+GL_MULTISAMPLE——如果启用，为单程反锯齿和其他效果显示多样本片段，详见glSampleCoverage
+
+GL_NORMALIZE——如果启用，法向量被计算为单位向量，详见glNormal和glNormalPointer。
+
+GL_POINT_SMOOTH——如果启用，使用调整过滤器描绘点，否则，画aliased点，详见glPointSize。
+
+GL_POLYGON_OFFSET_FILL——如果启用，在深度比较进行前多边形片段的深度值会进行移位。
+
+GL_RESCALE_NORMAL——如果启用，法向量的刻度由视图模型矩阵中的元素确定，详见glNormal和glNormalPointer。
+
+GL_SAMPLE_ALPHA_TO_MASK（仅1.0）——如果启用，将alpha值转变为多样本范围修正码。详见glSampleCoverage。
+
+GL_SAMPLE_ALPHA_TO_COVERAGE（仅1.1）——如果启用，将会产生一个范围值，它的每个bit都是由相应的样本位置的alpha值决定的。
+
+GL_SAMPLE_ALPHA_TO_ONE——如果启用，在计算完多样本范围修正码后将片段alpha值设为被允许的最大值。详见glSampleCoverage。
+
+GL_SAMPLE_MASK（仅1.0）——如果启用，在进行多样本时，申请一个码来修改片段范围。
+
+GL_SAMPLE_COVERAGE（仅1.1）——如果启用，片段范围会与另一个临时的范围值进行与运算。这个临时的范围值与上文中GL_SAMPLE_ALPHA_TO_COVERAGE描述的范围值的确定方式相同。但是作为GL_SAMPLE_COVERAGE_VALUE的值的功能，如果GL_SAMPLE_COVERAGE_VALUE为GL_TRUE，在它与片段范围值进行与运算前，这个临时的范围值是倒置的（所以bit的值都是倒置的），详见glSampleCoverage。
+
+GL_SCISSOR_TEST——如果启用，丢弃裁剪矩形外的片段。详见glScissor。
+
+GL_STENCIL_TEST——如果启用，做模板测试并更新模板缓冲区，详见glStencilFunc，glStencilMask和glStencilOp。
+
+GL_TEXTURE_2D——如果启用，当前活动纹理单元为二维纹理。详见glActiveTexture,glTexImage2D,glCompressedTexImage2D和glCopyTexImage2D
+
+GL_CLIP_PLANEi——如果启用，裁剪面i可用。详见glClipPlane。
+
+GL_POINT_SPRITE_OES（1.1 + OES_point_sprite 扩展）——如果启用，点块纹理可用，详见glPointSize和glTexEnv。
+
+错误:
+
+如果参数不是前面列表中的值，将会产生一个GL_INVALID_ENUM。
+
+参数：
+
+cap——指定一个在GL空间中声明的符号常量。
+
+glEnableClientState
+
+public void glEnableClientState(int array)
+
+功能：
+
+启用客户端的某项功能。
+
+详细：
+
+glEnableClientState和glDisableClientState启用或禁用客户端的单个功能。默认的，所有客户端功能禁用。
+
+array可以是下列符号常量：
+
+GL_COLOR_ARRAY——如果启用，颜色矩阵可以用来写入以及调用glDrawArrays方法或者glDrawElements方法时进行渲染。详见glColorPointer。
+
+GL_NORMAL_ARRAY——如果启用，法线矩阵可以用来写入以及调用glDrawArrays方法或者glDrawElements方法时进行渲染。详见glNormalPointer。
+
+GL_TEXTURE_COORD_ARRAY——如果启用，纹理坐标矩阵可以用来写入以及调用glDrawArrays方法或者glDrawElements方法时进行渲染。详见glTexCoordPointer。
+
+GL_VERTEX_ARRAY——如果启用，顶点矩阵可以用来写入以及调用glDrawArrays方法或者glDrawElements方法时进行渲染。详见glVertexPointer。
+
+GL_POINT_SIZE_ARRAY_OES(OES_point_size_arrayextension)——如果启用，点大小矩阵控制大小以渲染点和点sprites。这时由glPointSize定义的点大小将被忽略，由点大小矩阵提供的大小将被用来渲染点和点sprites。详见glPointSize。
+
+注意：
+
+启用和禁用GL_TEXTURE_COORD_ARRAY将会影响活动的客户纹理单元，活动的客户纹理单元由glClientActiveTexture控制。
+
+错误：
+
+如果array不是被允许的值，将产生GL_INVALID_ENUM。
+
+参数：
+
+array——指明启用的功能，允许的符号常量有GL_COLOR_ARRAY,GL_NORMAL_ARRAY,GL_TEXTURE_COORD_ARRAY,GL_VERTEX_ARRAY，和GL_POINT_SIZE_ARRAY_OES (OES_point_size_array extension)
+
+glFrontFace
+
+public void glFrontFace(int mode)
+
+功能：
+
+定义多边形的正面和背面。
+
+详细：
+
+在一个完全由不透明的密闭surface组成的场景中，多边形的背面永远不会被看到。剔除这些不能显示出来的面可以加速渲染器渲染图像的时间。开启和禁用剔除功能，调用glEnable和glDisable方法并以GL_CULL_FACE为参数。剔除功能初始值为禁止。
+
+如果一个虚拟的对象从第一个顶点，到第二个顶点，等等，直到最后一个顶点，这个多边形顶点移动的方向是按顺时针移动的，则这个多边形窗口坐标上的投影被认为是按顺时针绘出的。如果一个虚拟的对象从第一个顶点，到第二个顶点，等等，直到最后一个顶点，这个多边形顶点移动的方向是按逆时针移动的，则这个多边形窗口坐标上的投影被认为是按逆时针绘出的。glFrontFace指明多边形在窗口坐标中是顺时的还是逆时针被作为正面。传递GL_CCW给mode则选择逆时针多边形为正面，GL_CW则选择顺时针多边形为正面。默认逆时针多边形为正面。
+
+错误：
+
+如果mode不是被允许的值，将产生GL_INVALID_ENUM。
+
+参数：
+
+mode——多边形正面的方向。GL_CW和GL_CCW被允许，初始值为GL_CCW。
+
+glHint
+
+public void glHint(int target,int mode)
+
+功能：
+
+控制GL某些行为。
+
+详细：
+
+当拥有解释的空间时，GL某些方面的行为可以由hints控制。一个hints由两个参数指明。target是一个由常量符号描述的用以被控制的行为。mode是另一个由符号常量描述的想要执行的行为。target的初始值是GL_DONT_CARE。mode允许的符号常量有：
+
+GL_FASTEST——选择最有效率的选项。
+
+GL_NICEST——选择最正确或质量最好的选项。
+
+GL_DONT_CARE——无任何倾向。
+
+尽管hints控制实现的方面可以很好的定义，但hints的解释仍依赖于具体的实现。hints控制的方面由target指明，允许的符号常量有：
+
+GL_FOG_HINT——表明雾效果计算的精确度，如果每个像素的雾效果计算不能被GL效率支持的话，那么GL_DONT_CARE或GL_FASTEST可以用于每个每个顶点的雾效果计算。
+
+GL_LINE_SMOOTH_HINT——表明直线抗锯齿的效果。如果应用一个大的过滤函数， GL_NICEST可以应用于更多的在光栅化时产生的像素上。
+
+GL_PERSPECTIVE_CORRECTION_HINT——表明颜色和纹理坐标插值的效果。如果远点修正插入不能被GL有效支持的话，那么GL_DONT_CARE或者GL_FASTEST可以应用于颜色的线性插值或是纹理坐标。
+
+GL_POINT_SMOOTH_HINT——表明反走样点的效果。如果应用一个大的过滤函数，GL_NICEST可以应用于更多的在光栅化时产生的像素上。
+
+GL_GENERATE_MIPMAP_HINT（仅1.1）——表明自动生成的mipmap的质量和性能。
+
+注意：
+
+hints的解释基于具体的实现。一些实现会忽略glHint设置。
+
+错误：
+
+target——指明一个符号常量来表明被控制的行为。有GL_FOG_HINT ,GL_LINE_SMOOTH_HINT,GL_PERSPECTIVE_CORRECTION_HINT,和GL_POINT_SMOOTH_HINT，在1.1还有GL_GENERATE_MIPMAP_HINT。
+
+mode——指明一个符号常量来表明想要执行的行为。有GL_FASTEST,GL_NICEST和GL_DONT_CARE。
+
+网络解释：
+
+void glHint(GLenum target, GLenum hint);    // 控制OpenGL的某些行为
+参数target是要控制的行为
+参数hint可以是GL_FASTEST, GL_NICEST,GL_DONT_CARE.(效率最高, 质量最好, 没有选择)
+参数target的取值及其含义:
+GL_POINT_SMOOTH_HINT, GL_LINE_SMOOTH_HINT, GL_POLYGON_SMOOTH_HINT----反走样操作中, 直线,点或多边形的采样质量.
+GL_FOG_HINT----对每个像素(GL_NICEST)还是每个顶点(GL_FASTEST)执行雾效计算.
+GL_PERSPECTIV_CORRECTION_HINT----颜色和纹理坐标插值的质量
+GL_GENERATE_MIPMAP_HINT----自动生成的mipmap的质量和性能
+GL_TEXTURE_COMPRESSION_HINT----纹理图案的压缩质量和性能.
+
+glLineWidth
+
+publicvoid glLineWidth(float width)
+
+功能：
+
+指明光栅化线段的宽度。
+
+详细：
+
+glLineWidth指明可走样或反走样线的宽度。使用不是1的线宽会不会有不同的效果，取决与是否开启反走样功能。开启和关闭反走样功能需调用glEnable和 glDisable并以GL_LINE_SMOOTH为参数。反走样功能初始值为关闭。
+
+如果线的反走样功能被关闭，实际的宽度由设定宽度的最近整数值决定。（如果这个整数是0，则按照1来处理）如果|deltax| >= |delta y|，每个被光栅化的列的i个像素会被填充，i是指宽度的整数话的值。否则，没行的的i个像素点会被填充。
+
+如果反走样功能启用的话，线光栅化时会为每个像素区产生一个片段，这些像素区以矩形形式贯穿这个区域，矩形的宽度等于当前的线宽，长度等于线的真实长度，并以该线段为中心。每个片段的覆盖值是矩形区域相应的像素区域的坐标区域。这个值被保存起来，在光栅化时使用。
+
+当反走样功能开启时，不是所有的宽度都被支持。如果设置了一个不不被支持的值，将会使用离这个值最近的被支持的值。只有1可以保证是被支持的值，其他值要依据相应的应用平台来确定。同样的，对于走样的线宽度也有一个范围。想询问被支持的线宽范围以及这个范围内被支持线宽的大小不同处，需要调用glGetIntegerv方法并以GL_ALIASED_LINE_WIDTH_RANGE,GL_SMOOTH_LINE_WIDTH_RANGE,GL_SMOOTH_LINE_WIDTH_GRANULARITY为参数。
+
+注意：
+
+没有反走样的线线宽可能会在由应用平台决定的最大值以内，可以使用glGetIntegerv方法并以GL_ALIASED_LINE_WIDTH_RANGE为参数来这个最大线宽。
+
+错误：
+
+如果线宽小于等于0，将会产生GL_INVALID_VALUE。
+
+参数：
+
+width——指定光栅化时的线宽度，初始值为1。
+
+glLoadIdentity
+
+public void glLoadIdentity()
+
+功能：
+
+用特征矩阵代替当前矩阵。
+
+详细：
+
+glLoadIdentity使特征矩阵代替当前矩阵。语义上等价于调用glLoadMatrix方法并以特征矩阵为参数。
+
+( 1       0       0       0 )
+
+( 0       1       0      0 )
+
+( 0       0       1      0 )
+
+( 0       0       0      1 )
+
+但在一些情况下它更高效。
+
+glMaterialfv
+
+public void glMaterialfv(int face,
+
+                        int pname,
+
+                        float[] params,
+
+                         int offset)
+
+功能：
+
+为光线模式指明材质参数（矩阵版本）。
+
+详细：
+
+glMaterial分配值给材质参数。有两个匹配的材质参数。一个是正面设置，用于给点、线、多边形(当两面光线被禁用时)着色或者是正面多边形（当两面光线启用时）。另一个是背面设置，用于为背面多边形，仅当两面光线被启用时。关于一面和两面光线计算的内容参考glLightModel。
+
+glMaterial有三个参数，第一个，face，必须是GL_FRONT_AND_BACK并且指明正面和背面想要修改成的材质。第二个，pname，指明几个参数中的哪一个在一或两个设置中将要被更改。第三个，params，指明已指明的参数的值。
+
+材质参数被用于可以应用于每个顶点的光线方程式。方程式将在glLightModel相关文档中讨论。这些参数可以利用glMaterial来指明，下面是光线方程式的解释。
+
+GL_AMBIENT——参数包括4个整数或单精度值用以指明材质的环境RGBA反射比。这个值并没有范围，初始环境反射比为(0.2, 0.2, 0.2,1.0)。
+
+GL_DIFFUSE——参数包括4个整数或单精度值用以指明材质的散射RGBA反射比。这个值并没有范围，初始散射反射比为(0.8, 0.8, 0.8,1.0)。
+
+GL_SPECULAR——参数包括4个整数或单精度值用以指明材质的镜面反射RGBA反射比。这个值并没有范围，初始镜面反射反射比(0, 0, 0, 1)。
+
+GL_EMISSION——参数包括4个整数或单精度值用以指明材质的RGBA发射光强度。这个值并没有范围，初始值为(0, 0, 0, 1)。
+
+GL_SHININESS——参数包括一个整数或单精度值用以指明材质的RGBA镜面反射指数。范围是[0, 128]。初始值为0。
+
+GL_AMBIENT_AND_DIFFUSE——相当于以相同的参数值调用glMaterial方法两次。一次是以GL_AMBIENT为第二参数，一次是以GL_DIFFUSE为第二参数。
+
+注意：
+
+改变每个顶点的散射和环境反射材质，可以使用颜色材质。开启与禁用GL_COLOR_MATERIAL调用glEnable和glDisable方法并以GL_COLOR_MATERIAL为参数，颜色材质初始是禁用的。
+
+错误：
+
+如果face或pname不是被允许的值，将会产生GL_INVALID_ENUM。
+
+如果镜面反射指数不在范围[0, 128]中，将会产生GL_INVALID_VALUE。
+
+参数：
+
+face——指明哪个或哪些面需要更新。必须是GL_FRONT_AND_BACK。
+
+pname——指明指明需要更新的面的材质参数。必须是GL_AMBIENT,GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, GL_SHININESS或GL_AMBIENT_AND_DIFFUSE中的一个。
+
+params——指明要赋予pname的值的索引。
+
+offset——参数矩阵中的开始偏移量。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果params是null。
+
+java.lang.IllegalArgumentException——如果offset小于0。
+
+java.lang.IllegalArgumentException——如果params.length- offset小于参数要求的值的个数。
+
+glMaterialfv
+
+public void glMaterialfv(int face,int pname,FloatBuffer params)
+
+功能：
+
+glMaterial的单精度缓冲区版本。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果params是null。
+
+java.lang.IllegalArgumentException——如果offset小于0。
+
+java.lang.IllegalArgumentException——如果params.length- offset小于参数要求的值的个数。
+
+glMaterialx
+
+public void glMaterialx(int face,int pname,int param)
+
+功能：
+
+glMaterial的整数版本。
+
+glMaterialxv
+
+public void glMaterialxv(int face,
+
+                        int pname,
+
+                        int[] params,
+
+                        int offset)
+
+功能：
+
+glMaterial的整数矩阵版本。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果params是null。
+
+java.lang.IllegalArgumentException——如果offset小于0。
+
+java.lang.IllegalArgumentException——如果params.length- offset小于参数要求的值的个数。
+
+glMaterialxv
+
+public void glMaterialxv(int face,int pname,IntBuffer params)
+
+功能：
+
+glMaterial的整数缓冲区版本。
+
+抛出：
+
+java.lang.IllegalArgumentException——如果params是null。
+
+java.lang.IllegalArgumentException——如果offset小于0。
+
+java.lang.IllegalArgumentException——如果params.length- offset小于参数要求的值的个数。
+
+glMatrixMode
+
+public void glMatrixMode(int mode)
+
+功能：
+
+指明哪个矩阵是当前矩阵。
+
+详细：
+
+glMatrixMode设置当前矩阵模式，mode允许的值有：
+
+GL_MODELVIEW——应用视图矩阵堆的后续矩阵操作。
+
+GL_PROJECTION——应用投射矩阵堆的后续矩阵操作。
+
+GL_TEXTURE——应用纹理矩阵堆的后续矩阵操作。
+
+GL_MATRIX_PALETTE_OES（OES_matrix_palette 扩展）——启用矩阵调色板堆栈扩展，并应用矩阵调色板堆栈后续矩阵操作。
+
+错误：
+
+如果mode不是一个允许的值，将产生一个GL_INVALID_ENUM。
+
+参数：
+
+mode——指明哪一个堆允许后续的矩阵操作。允许的值有L_MODELVIEW,GL_PROJECTION和GL_TEXTURE，在有OES_matrix_palette扩展时，GL_MATRIX_PALETTE_OES也被允许，初始值是GL_MODELVIEW。
+
+glNormalPointer
+
+public void glNormalPointer(int type,int stride,Buffer pointer)
+
+功能：
+
+定义一个法线矩阵。
+
+详细：
+
+glNormalPointer指明在渲染时的位置和法线矩阵中的数据。type指明法线坐标的数据类型，stride给出从一个法线到下一个法线的字节幅度，允许顶点和属性被装在单独的矩阵中或存储在分开的矩阵中。（单独矩阵在某些版本更有效率）。当一个法线矩阵被指明则type , stride 和pointer被存在客户端状态。
+
+如果法线矩阵被启用，它会在调用glDrawArrays和glDrawElements方法时被调用。启用和禁用法线矩阵需调用glEnableClientState或glDisableClientState并以GL_NORMAL_ARRAY，法线矩阵初始为禁用，并且当调用glDrawArrays和glDrawElements方法时不允许调用。
+
+注意：
+
+glNormalPointer在客户端运行。
+
+错误：
+
+当type不是被允许的值，将产生GL_INVALID_ENUM。
+
+当stride是负数，将产生GL_INVALID_VALUE。
+
+pointer必须是类型匹配的直接缓冲区。类型由type指明。
+
+参数：
+
+type——指明矩阵中每个坐标的数据类型，符号常量有GL_BYTE,GL_SHORT, GL_FIXED和GL_FLOAT，初始值为GL_FLOAT。
+
+stride——指明连续法线之间的位偏移量。如果stride为0，则法线被紧密封装在矩阵中，初始值是0。
+
+pointer——指明一个指针，指针指向矩阵中第一个法线的第一个坐标。初始值为0，如果指针不是null，将不会设置缓冲区。
+
+抛出：
+
+java.lang.IllegalStateException——如果为OpenGL ES 1.1并启用VBOs。
+
+java.lang.IllegalArgumentException——如果指针不是直接的。
+
+glRotatef
+
+public void glRotatef(float angle,float x,float y,float z)
+
+功能：
+
+用旋转矩阵乘以当前矩阵。
+
+详细：
+
+glRotate将围绕向量(x, y, z)产生一定角度的旋转。由旋转矩阵乘以当前矩阵(详见glMatrixMode)，并由其乘积代替当前矩阵。好像调用glMultMatrix方法，并以下列矩阵为参数：
+
+( x^2(1 - c) + c       xy (1 - c) - zs       xz (1 - c) +ys       0 )
+
+( xy (1 - c) + zs      y^2(1 - c) + c        yz (1 - c) -xs       0 )
+
+( xz (1 - c) - ys      yz (1 - c) + xs       z^2(1 - c) +c        0 )
+
+(       0                    0                     0              1 )
+
+这里c = cos (angle), s = sin (angle), and ||(x, y, z)|| = 1, (如果不是, GL 将格式化该向量)。
+
+如果矩阵模式是GL_MODELVIEW或者GL_PROJECTION，调用glRotate方法后所有被绘对象将旋转一个角度。使用glPushMatrix方法和glPopMatrix方法储存未旋转坐标系统。
+
+注意：
+
+旋转方式服从右手原则，所以如果一个向量(x, y, z)指向用户方向，将按逆时针方向旋转。
+
+参数：
+
+angle——指明旋转的角度，单位为度。
+
+x——指明旋转向量的x坐标。
+
+y——指明旋转向量的y坐标。
+
+z——指明旋转向量的z坐标。
+
+glRotatex
+
+public void glRotatex(int angle,int x,int y,int z)
+
+功能：
+
+glRotatef的修正方法。
+
+glScalef
+
+public void glScalef(float x,float y,float z)
+
+功能：
+
+用缩放矩阵乘以当前矩阵。
+
+详细：
+
+glScale沿着x、y、z坐标轴产生并不统一的缩放。三个参数表明沿着每个坐标轴想要的缩放因子。
+
+用缩放矩阵乘以当前矩阵(详见glMatrixMode)，其乘积将代替当前矩阵，就好像调用glMatrixMode方法，并以下列矩阵为参数：
+
+( x       0       0      0 )
+
+( 0       y       0      0 )
+
+( 0       0       z      0 )
+
+( 0       0       0      1 )
+
+如果矩阵模式不是GL_MODELVIEW就是GL_PROJECTION的话，则调用glScale方法后所以被绘的对象将产生一个缩放。
+
+使用glPushMatrix方法和glPopMatrix方法储存未缩放坐标系统。
+
+注意：
+
+如果不仅仅一个缩放矩阵应用于模式视图矩阵，并且启用光线效果，光线常常出现错误。这种情况下，调用glEnable方法并以GL_NORMALIZE为参数，启用法线自动格式化功能。
+
+参数：
+
+x——指明x坐标轴上的缩放因子。
+
+y——指明y坐标轴上的缩放因子。
+
+z——指明z坐标轴上的缩放因子。
+
+glScalex
+
+public void glScalex(int x,int y,int z)
+
+功能：
+
+glScalef方法的修正方法。
+
+glShadeModel
+
+publicvoid glShadeModel(int mode)
+
+功能：
+
+选择恒定或光滑着色模式。
+
+详细：
+
+GL图元可以采用恒定或者光滑着色模式，默认值为光滑着色模式。当图元进行光栅化的时候，将引起插入顶点颜色计算，不同颜色将被均匀分布到各个像素片段。恒定着色模式则选择计算一个顶点的颜色并在光栅化一个图元时分布到所有产生的像素片段。不管任何情况下，如果光照功能开启的话顶点颜色计算时会有光照效果或者当光照效果关闭的话被指定的顶点计算颜色为那时的当前颜色。恒定和光滑着色模式不能区分点。在顶点矩阵开始时开始，并开始顶点计数，而图元是从1开始的。GL使恒定着色模式的线段i计算第i+1顶点的颜色，即它的第二个顶点。计算同样从1开始，GL使恒定着色模式的多边形计算第i+2顶点的颜色，即指明多边形的最后一个顶点。
+
+恒定和光滑着色模式由glShadeModel使用GL_FLAT和GL_SMOOTH参数来设定。
+
+错误：
+
+如果参数是GL_FLAT或GL_SMOOTH以外的值，将产生GL_INVALID_ENUM。
+
+参数：
+
+mode——指明一个符号常量来代表要使用的着色技术。允许的值有GL_FLAT 和GL_SMOOTH，初始值为GL_SMOOTH。
+
+glTranslatef
+
+public void glTranslatef(float x,float y,float z)
+
+功能：
+
+用平移矩阵乘以当前矩阵。
+
+详细：
+
+glTranslate通过向量(x, y, z) 产生平移，以平移矩阵乘以当前矩阵（见glMatrixMode），用乘积代替当前矩阵，就好像调用glMultMatrix方法并以下列矩阵为参数：
+
+( 1       0       0      x )
+
+( 0       1       0      y )
+
+( 0       0       1      z )
+
+( 0       0       0      1 )
+
+如果矩阵模式是GL_MODELVIEW或GL_PROJECTION，则调用glTranslate方法后所绘的对象都将发生平移。
+
+使用glPushMatrix方法和glPopMatrix方法来保存没有平移的坐标系统。
+
+参数：
+
+x——指明平移向量的x坐标。
+
+y——指明平移向量的y坐标。
+
+z——指明平移向量的z坐标。
+
+glTranslatex
+
+public void glTranslatex(int x,int y,int z)
+
+功能：
+
+glTranslatef方法的修正方法。
+
+glVertexPointer
+
+public void glVertexPointer(int size,int type,int stride,Buffer pointer)
+
+功能：
+
+定义一个顶点坐标矩阵。
+
+详细：
+
+glVertexPointer指明当渲染时一个顶点坐标矩阵的存储单元和数据。
+
+当一个顶点矩阵被指明时，size, type, stride和pointer保存为客户端状态。
+
+如果顶点矩阵功能启用，当调用glDrawArrays方法或glDrawElements方法时会使用。想要启用或禁止顶点矩阵，使用glEnableClientState或glDisableClientState方法，并以GL_VERTEX_ARRAY为参数。顶点矩阵初始为禁止，调用glDrawArrays方法或glDrawElements方法时无效。
+
+调用glDrawArrays方法根据事先指明的点和顶点属性矩阵创建一系列图元（都有相同的类型）。调用glDrawElements方法根据顶点索引和顶点属性创建一系列图元。
+
+注意：
+
+glVertexPointer在一般版本中是在客户端的。
+
+错误：
+
+如果size不是2, 3或者4，将产生GL_INVALID_VALUE。
+
+如果type不是允许的值，将产生GL_INVALID_ENUM。
+
+如果stride是负值，将产生GL_INVALID_VALUE。
+
+pointer必须是直接缓存，并且类型与type指明的类型相同。
+
+参数：
+
+size——每个顶点的坐标维数，必须是2, 3或者4，初始值是4。
+
+type——指明每个顶点坐标的数据类型，允许的符号常量有GL_BYTE, GL_SHORT, GL_FIXED和GL_FLOAT，初始值为GL_FLOAT。
+
+stride——指明连续顶点间的位偏移，如果为0，顶点被认为是紧密压入矩阵，初始值为0。
+
+pointer——指明顶点坐标的缓冲区，如果为null，则没有设置缓冲区。
+
+抛出：
+
+java.lang.IllegalStateException——如果是OpenGL ES 1.1并且VBOs可用。
+
+java.lang.IllegalArgumentException——如果pointer不是直接缓存。
+
+glViewport
+
+public void glViewport(int x,int y,int width,int height)
+
+功能：
+
+设置一个视口
+
+详细：
+
+glViewport指明ｘ、ｙ从标准设备坐标到窗口坐标的仿射变换，使(xnd, ynd)为标准设备坐标，然后窗口坐标(xw, yw)由下列公式计算：
+
+xw = ( xnd + 1 ) width/2 + x
+
+yw = ( ynd + 1 ) height/2 + y
+
+视口宽、高的范围区间视版本而定，想查询此区间可使用方法glGetIntegerv，并以GL_MAX_VIEWPORT_DIMS为参数。
+
+错误：
+
+如果宽、高为负数，将产生GL_INVALID_VALUE
+
+参数：
+
+ｘ——指明视口矩形的左下角ｘ坐标，初始值为０。
+
+ｙ——指明视口矩形的左下角ｙ坐标，初始值为０。
+
+width——指明视口的宽，如果ＧＬ上下文首次附于一个surface则宽、高为这个surface大小。
+
+height——指明视口的高，如果ＧＬ上下文首次附于一个surface则宽、高为这个surface大小

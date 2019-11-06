@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by wenh on 16/10/2511:09.
  */
 
-public class WH_ECGView extends View {
+public class DetailEcgView extends View {
 
     private float gap_grid;//网格间距
     private int width,height;//本页面宽，高
@@ -41,16 +41,16 @@ public class WH_ECGView extends View {
     private float rect_gap_x;//下方矩形区域心电图数据间的横坐标间隙
     private float multiple_for_rect_width;//矩形区域的宽与屏幕宽的比
 
-    public WH_ECGView(Context context, AttributeSet attrs){
+    public DetailEcgView(Context context, AttributeSet attrs){
         super(context,attrs);
         //背景色
-        this.setBackgroundColor(getResources().getColor(R.color.black));
+        this.setBackgroundColor(0xffffefd5);
     }
 
-    public WH_ECGView(Context context){
+    public DetailEcgView(Context context){
         super(context);
         //背景色
-        this.setBackgroundColor(getResources().getColor(R.color.black));
+        this.setBackgroundColor(0xffffefd5);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class WH_ECGView extends View {
         for (int i = 1 ; i < grid_hori + 2 ; i ++){
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(getResources().getColor(R.color.limegreen)); //<color name="data_pr">#0a7b14</color>
+            paint.setColor(0xff333333); //<color name="data_pr">#0a7b14</color>
             paint.setStrokeWidth(1.0f);
             Path path = new Path();
             path.moveTo(xori, gap_grid * (i-1) + (height-grid_hori*gap_grid)/2);
@@ -108,7 +108,7 @@ public class WH_ECGView extends View {
         for (int i = 1 ; i < grid_ver + 2 ; i ++){
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(getResources().getColor(R.color.limegreen));
+            paint.setColor(0xff333333);
             paint.setStrokeWidth(1.0f);
             Path path = new Path();
             path.moveTo(gap_grid * (i-1) + (width-grid_ver*gap_grid)/2, 0);

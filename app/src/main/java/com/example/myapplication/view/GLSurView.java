@@ -5,7 +5,9 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
+import com.example.myapplication.render.FBORender;
 import com.example.myapplication.render.MultiRender;
 import com.example.myapplication.render.MyRender;
 import com.example.myapplication.render.OpenGLRender;
@@ -66,12 +68,17 @@ public class GLSurView extends GLSurfaceView {
         //设置渲染器
 //        setRenderer(new OpenGLRender());
 //        setRenderer(new MyRender());
-        setRenderer(new SquareRender());
+        setRenderer(new FBORender());
         //设置非主动渲染(须在 setRenderer() 之后)
         //1.非主动渲染RENDERMODE_WHEN_DIRTY(0) 2.RENDERMODE_CONTINUOUSLY主动渲染(1)
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.requestRender();
+        return super.onTouchEvent(event);
+    }
 
     class MyThread extends Thread {
         @Override

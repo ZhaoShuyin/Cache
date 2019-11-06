@@ -10,7 +10,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * https://www.it610.com/article/3822572.htm
+ * https://www.it610.com/article/3822572.html
  */
 public class OpenGLRender implements GLSurfaceView.Renderer {
 

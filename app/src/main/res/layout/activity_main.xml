@@ -8,13 +8,30 @@
     android:orientation="vertical"
     tools:context="com.example.myapplication.MainActivity">
 
-    <com.example.myapplication.view.EcgView
+
+    <com.example.myapplication.view.ZZView
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
+
+    <!--<com.example.myapplication.view.EcgView
         android:id="@+id/ecg_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="@drawable/ecgbg"/>
+        android:background="@drawable/ecgbg" />-->
 
-    <com.example.myapplication.view.GLSurView
-        android:layout_width="300dp"
-        android:layout_height="300dp"/>
+    <!-- <com.example.myapplication.view.SbookView
+         android:layout_width="300dp"
+         android:layout_height="300dp" />-->
+
+    <!--<com.example.myapplication.view.EcgView
+        android:id="@+id/testview"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#DDD"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#099"/>-->
 </LinearLayout>

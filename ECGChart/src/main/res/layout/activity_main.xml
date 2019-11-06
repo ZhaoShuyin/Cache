@@ -7,12 +7,12 @@
     tools:context="com.ecg.wenh.ecgchart.MainActivity">
 
 
-    <com.ecg.wenh.ecgchart.ecgview.WH_ECGView
+    <com.ecg.wenh.ecgchart.ecgview.DetailEcgView
         android:id="@+id/ecg_data_ecgView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.ecg.wenh.ecgchart.ecgview.ECG_allData_View
+    <com.ecg.wenh.ecgchart.ecgview.AllEcgView
         android:id="@+id/allData_ecgView"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

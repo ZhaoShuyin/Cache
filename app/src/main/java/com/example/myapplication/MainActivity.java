@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myapplication.layout.BlueToothActivity;
 import com.example.myapplication.view.ABCView;
 import com.example.myapplication.view.EcgView;
+import com.example.myapplication.view.ZZZView;
 
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -27,8 +29,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EcgView ecgView = findViewById(R.id.ecg_view);
-        ecgView.setQueue(queue);
+       /* EcgView ecgView = findViewById(R.id.ecg_view);
+        ecgView.setQueue(queue);*/
+       /* final ZZZView zzzView = findViewById(R.id.testview);
+        final ImageView imageView = findViewById(R.id.image);
+        zzzView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zzzView.test(imageView);
+            }
+        });*/
     }
 
 

@@ -1,20 +1,20 @@
 package com.example.myapplication.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.myapplication.R;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @Title com.example.myapplication
@@ -22,26 +22,29 @@ import com.example.myapplication.R;
  * @Autor Zsy
  */
 
-public class SurView extends SurfaceView implements SurfaceHolder.Callback {
+public class EcgView2 extends SurfaceView implements SurfaceHolder.Callback {
 
     String TAG = "ZSurView";
     public static boolean isRunning;
     private int position = 0;
     private int mWidth, mHeight, mUnit;//控件宽度,高度
+
     private Paint mPaint;
     private Rect rect;
     private SurfaceHolder holder;
+    private ConcurrentLinkedQueue<Short> queue;
 
-    public SurView(Context context) {
+    public EcgView2(Context context) {
         super(context);
     }
 
-    public SurView(Context context, AttributeSet attrs) {
+    public EcgView2(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.e(TAG, "SurView: 构造函数");
         mPaint = new Paint();
-        mPaint.setStrokeWidth(10);
+        mPaint.setStrokeWidth(2);
         mPaint.setColor(0xffff0000);
+        mPaint.setAntiAlias(true);
         rect = new Rect();
         //设置背景透明
         this.setZOrderOnTop(true);
@@ -63,7 +66,8 @@ public class SurView extends SurfaceView implements SurfaceHolder.Callback {
         Log.e(TAG, "onSizeChanged: 尺寸变化 w: " + w + ", h:" + h);
         mWidth = w;
         mHeight = h;
-        mUnit = mWidth / 5;
+        mUnit = mWidth / 100;
+        mLastY = mHeight / 2;
     }
 
     @Override
@@ -77,9 +81,11 @@ public class SurView extends SurfaceView implements SurfaceHolder.Callback {
         Log.e(TAG, "surfaceCreated: Surface创建");
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.parseColor("#FF00FFFF"));
-        canvas.drawCircle(mWidth/2,mHeight/2,20,mPaint);
         holder.unlockCanvasAndPost(canvas);
         isRunning = true;
+        for (int i = 0; i < 100; i++) {
+            integers.add((i % 5) * 20);
+        }
         new MyThread().start();
     }
 
@@ -94,35 +100,44 @@ public class SurView extends SurfaceView implements SurfaceHolder.Callback {
         isRunning = false;
     }
 
-    private void drawNext() {
-        Canvas canvas = holder.lockCanvas();
-        Matrix matrix = canvas.getMatrix();
-        matrix.preTranslate(50, 0);
-        canvas.setMatrix(matrix);
-        holder.unlockCanvasAndPost(canvas);    //释放执行绘制区域
-        Log.e(TAG, "帧刷新 矩阵右移");
-    }
+    private List<Integer> integers = new ArrayList<>();
+    private int mLastY, mTempY;
+
+    int i = 0;
 
     private void drawWave() {
         position++;
-        if ((position - 1) * mUnit >= mWidth) {
+        if (position >= 100) {
             position = 0;
+            i++;
+            if (i % 3 == 0) {
+                mPaint.setColor(0xffff0000);
+            }
+            if (i % 3 == 1) {
+                mPaint.setColor(0xff00ff00);
+            }
+            if (i % 3 == 2) {
+                mPaint.setColor(0xff0000ff);
+            }
         }
-        Log.e(TAG, "帧刷新 position: " + position);
+//        Log.e(TAG, "帧刷新 position: " + position);
         int left = mUnit * position;
         int top = 0;
-        int right = mUnit * (position + 1);
+        int right = mUnit * (position + 1) + 20;
         int bottom = mHeight;
         rect.set(left, top, right, bottom);
 
-
         Canvas canvas = holder.lockCanvas(rect);//锁定绘制区域
-        int startX = left + mUnit / 2;
-        int endX = left + mUnit;
-        int startY = (mHeight / 5 * position);
-        int endY = (mHeight / 5 * position);
-        canvas.drawLine(startX, startY, endX, endY, mPaint);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        mTempY = integers.get(position) + mHeight / 2;
+        canvas.drawLine(left, mLastY, left + mUnit, mTempY, mPaint);
+        mLastY = mTempY;
+
         holder.unlockCanvasAndPost(canvas);    //释放执行绘制区域
+    }
+
+    public void setQueue(ConcurrentLinkedQueue<Short> queue) {
+        this.queue = queue;
     }
 
 
@@ -132,12 +147,11 @@ public class SurView extends SurfaceView implements SurfaceHolder.Callback {
             super.run();
             while (isRunning) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//                drawWave();
-//                drawNext();
+                drawWave();
             }
         }
     }

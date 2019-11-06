@@ -3,12 +3,16 @@ package com.example.myapplication.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import java.util.Arrays;
 
 public class SbookView extends View {
 
@@ -53,8 +57,29 @@ public class SbookView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.GRAY);
-        canvas.save();
+        canvas.drawColor(Color.WHITE);
+        mpaint.setColor(0xffff0000);
+        canvas.drawLine(0, 0, 200, 200, mpaint);
+
+
+        Matrix matrix = canvas.getMatrix();
+//        float[] floats = new float[];
+//        matrix.getValues(floats);
+//        Log.e("ZSurView", "onDraw: "+ Arrays.toString(floats));
+
+
+      /*  Matrix matrix = new Matrix();
+        matrix.setTranslate(100,100);
+        canvas.concat(matrix);*/
+       /* canvas.save();
+
+        canvas.clipRect(0,0,200,200);
+        canvas.translate(100,0);
+        mpaint.setColor(0xff0000ff);
+        canvas.drawCircle(50,50,20,mpaint);
+        canvas.save();*/
+
+      /*  canvas.save();
         canvas.translate(10, 10);
         drawScene(canvas);
         canvas.restore();//回滚状态
@@ -62,9 +87,9 @@ public class SbookView extends View {
         canvas.save();   //保存状态
         canvas.translate(200, 0);
         canvas.clipRect(10, 10, 90, 90);
-        canvas.clipRect(30, 30, 70, 70, Region.Op.XOR);
+//        canvas.clipRect(30, 30, 70, 70, Region.Op.XOR);
         drawScene(canvas);
-        canvas.restore();
+        canvas.restore();*/
 
 //        canvas.save();
 //        canvas.translate(10, 160);
